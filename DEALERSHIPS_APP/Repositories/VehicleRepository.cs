@@ -6,6 +6,7 @@ namespace DEALERSHIPS_APP.Repositories
     public interface IVehicleRepository
     {
         Task<List<Vehicle>> GetAll();
+        Task<Vehicle?> GetById(int id);
     }
 
     public class VehicleRepository : IVehicleRepository
@@ -22,6 +23,11 @@ namespace DEALERSHIPS_APP.Repositories
         public async Task<List<Vehicle>> GetAll()
         {
             return await _dbContext.Vehicles.ToListAsync();
+        }
+
+        public async Task<Vehicle?> GetById(int id)
+        {
+            return await _dbContext.Vehicles.SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }

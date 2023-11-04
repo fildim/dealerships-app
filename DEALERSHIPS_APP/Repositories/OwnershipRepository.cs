@@ -5,6 +5,7 @@ namespace DEALERSHIPS_APP.Repositories
 {
     public interface IOwnershipRepository
     {
+        Task Create(Ownership ownership);
         Task<List<int>> GetAllVehicleIds();
     }
 
@@ -20,6 +21,12 @@ namespace DEALERSHIPS_APP.Repositories
         public async Task<List<int>> GetAllVehicleIds()
         {
             return await _dbContext.Ownerships.Select(x => x.VehicleId).ToListAsync();
+        }
+
+        public async Task Create(Ownership ownership)
+        {
+            _dbContext.Ownerships.Add(ownership);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
