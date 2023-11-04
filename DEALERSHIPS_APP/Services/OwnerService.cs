@@ -27,9 +27,9 @@ namespace DEALERSHIPS_APP.Services
 
         public async Task Create(Owner owner)
         {
-            var owner_check = await _ownerRepository.GetByPhone(owner.Phone);
+            var ownerCheck = await _ownerRepository.GetByPhone(owner.Phone);
 
-            if (owner_check != null)
+            if (ownerCheck != null)
             {
                 throw new EntityAlreadyExistsException($"Owner with phone = '{owner.Phone}' already exists");
             }
