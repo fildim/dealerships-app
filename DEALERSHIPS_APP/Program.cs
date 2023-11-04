@@ -25,6 +25,7 @@ builder.Services.AddValidatorsFromAssembly(System.Reflection.Assembly.GetExecuti
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IDBTransactionService, DBTransactionService>();
 
 
 
@@ -34,6 +35,9 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IGarageRepository, GarageRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IOwnershipHistoryRepository, OwnershipHistoryRepository>();
+builder.Services.AddScoped<IOwnershipRepository, OwnershipRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 
 

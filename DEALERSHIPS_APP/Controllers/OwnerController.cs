@@ -39,6 +39,12 @@ namespace DEALERSHIPS_APP.Controllers
             return _mapper.Map<ReadOnlyOwnerDTO>(owner);
         }
 
+        [HttpPost("{ownerId:int}/[action]/{vehicleId:int}")]
+        public async Task InitialBindVehicle([FromRoute]int ownerId, [FromRoute]int vehicleId)
+        {
+            await _service.InitialBindVehicle(ownerId, vehicleId);
+        }
+
 
 
 
