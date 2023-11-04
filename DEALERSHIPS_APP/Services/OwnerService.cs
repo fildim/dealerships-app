@@ -16,10 +16,14 @@ namespace DEALERSHIPS_APP.Services
     public class OwnerService : IOwnerService
     {
         private readonly IOwnerRepository _ownerRepository;
+        private readonly IOwnershipRepository _ownershipRepository;
+        private readonly IVehicleRepository _vehicleRepository;
 
-        public OwnerService(IOwnerRepository repository)
+        public OwnerService(IOwnerRepository repository, IOwnershipRepository ownershipRepository, IVehicleRepository vehicleRepository)
         {
             this._ownerRepository = repository;
+            _ownershipRepository = ownershipRepository;
+            _vehicleRepository = vehicleRepository;
         }
 
 
@@ -62,6 +66,8 @@ namespace DEALERSHIPS_APP.Services
 
             return owner;
         }
+
+        //public async Task<> BindVehicle(int id)
 
 
 
