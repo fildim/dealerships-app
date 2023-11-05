@@ -20,7 +20,8 @@ namespace DEALERSHIPS_APP.Middlewares
             {
                 await next(context);
 
-            } catch (ValidationException e) 
+            } 
+            catch (ValidationException e) 
             {
                 var errors = e.Errors.Select(x => x.ErrorMessage).ToList();
                 
@@ -28,12 +29,14 @@ namespace DEALERSHIPS_APP.Middlewares
                 context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 await context.Response.WriteAsJsonAsync(JsonConvert.SerializeObject(errors));
 
-            } catch (EntityAlreadyExistsException e)
+            } 
+            catch (EntityAlreadyExistsException e)
             {
                 _logger.LogError(e, e.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 await context.Response.WriteAsJsonAsync(e.Message);
-            } catch (EntityNotFoundException e)
+            } 
+            catch (EntityNotFoundException e)
             {
                 _logger.LogError(e, e.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;

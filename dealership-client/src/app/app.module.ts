@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+import { OwnerService } from './services/owner.service';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+  ],
+  providers: [
+    OwnerService
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

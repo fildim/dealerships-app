@@ -21,6 +21,14 @@ builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddValidatorsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
 
+builder.Services.AddCors(x =>
+{
+    x.AddPolicy("policy", x =>
+    {
+        x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
@@ -91,15 +99,15 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+
+
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors("policy");
 
 app.UseAuthorization();
 
@@ -110,5 +118,13 @@ app.UseEndpoints(endpoints =>
 
 
 app.MapRazorPages();
+
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.Run();
