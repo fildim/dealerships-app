@@ -140,6 +140,33 @@ namespace DEALERSHIPS_APP.Services
 
 
 
+       
+
+
+        public async Task<List<Vehicle>?> GetOwnedVehicles(int ownerId)
+        {
+            var listOfAllVehicles = await _ownershipRepository.GetAllVehicleIds();
+
+            var listOfOwnedVehiclesIds = listOfAllVehicles.Where(x => x == ownerId).ToList();
+
+            var listOfOwnedVehicles = new List<Vehicle>();
+
+            foreach (var id in listOfOwnedVehiclesIds)
+            {
+                listOfOwnedVehicles.Add(await _vehicleRepository.GetById(id));
+                
+            }
+
+            return listOfOwnedVehicles;
+        }
+
+
+        
+
+
+
+
+
         // TransferBindVehicle()
 
 

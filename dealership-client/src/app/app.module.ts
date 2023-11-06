@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { OwnerService } from './services/owner.service';
+import { GarageService } from './services/garage.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { OwnerService } from './services/owner.service';
     HttpClientModule,
   ],
   providers: [
-    OwnerService
+    OwnerService,
+    GarageService
   ],
   bootstrap: [AppComponent]
 })

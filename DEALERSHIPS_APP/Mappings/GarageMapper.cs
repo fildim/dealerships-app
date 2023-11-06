@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DEALERSHIPS_APP.DTOS.Garage;
+using DEALERSHIPS_APP.Models;
 
 namespace DEALERSHIPS_APP.Mappings
 {
@@ -8,6 +9,7 @@ namespace DEALERSHIPS_APP.Mappings
         public GarageMapper()
         {
             CreateMap<CreateGarageDTO, Models.Garage>();
+            CreateMap<Garage, ReadOnlyGarageDTO>();
         }
     }
 }
