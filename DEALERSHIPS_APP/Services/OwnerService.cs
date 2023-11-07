@@ -127,6 +127,7 @@ namespace DEALERSHIPS_APP.Services
 
                 await _ownershipHistoryRepository.Create(newOwnershipHistory);
 
+                //todo remove this
                 Thread.Sleep(100000);
 
                 await _dbTransactionService.Commit();
@@ -153,6 +154,7 @@ namespace DEALERSHIPS_APP.Services
 
             foreach (var id in listOfOwnedVehiclesIds)
             {
+                //todo getById could return null, check before adding
                 listOfOwnedVehicles.Add(await _vehicleRepository.GetById(id));
                 
             }

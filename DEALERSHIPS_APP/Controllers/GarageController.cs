@@ -27,8 +27,9 @@ namespace DEALERSHIPS_APP.Controllers
             await _service.Create(garage);
         }
 
-        [HttpGet]
-        public async Task<ReadOnlyGarageDTO> Get([FromRoute]int id)
+        //todo add id in route
+		[HttpGet]
+		public async Task<ReadOnlyGarageDTO> Get([FromRoute]int id)
         {
             var garage = await _service.GetById(id);
             return _mapper.Map<ReadOnlyGarageDTO>(garage);
