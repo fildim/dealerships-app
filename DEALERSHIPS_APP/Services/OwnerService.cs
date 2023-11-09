@@ -8,6 +8,7 @@ namespace DEALERSHIPS_APP.Services
     public interface IOwnerService
     {
         Task Create(Owner owner);
+        Task<List<Vehicle>> GetBindedVehicles(int ownerId);
         Task<Owner> GetById(int id);
         Task<Owner> GetByPhone(string phone);
         Task InitialBindVehicle(int ownerId, int vehicleId);
@@ -125,9 +126,7 @@ namespace DEALERSHIPS_APP.Services
                 newOwnershipHistory.DateOfSale = timeNowIs;
                 newOwnershipHistory.Created = timeNowIs;
 
-                await _ownershipHistoryRepository.Create(newOwnershipHistory);
-
-                Thread.Sleep(100000);
+                await _ownershipHistoryRepository.Create(newOwnershipHistory);;
 
                 await _dbTransactionService.Commit();
             }
@@ -143,24 +142,16 @@ namespace DEALERSHIPS_APP.Services
        
 
 
-        public async Task<List<Vehicle>?> GetOwnedVehicles(int ownerId)
+        public async Task<List<Vehicle>> GetBindedVehicles(int ownerId)
         {
-            var listOfAllVehicles = await _ownershipRepository.GetAllVehicleIds();
-
-            var listOfOwnedVehiclesIds = listOfAllVehicles.Where(x => x == ownerId).ToList();
-
-            var listOfOwnedVehicles = new List<Vehicle>();
-
-            foreach (var id in listOfOwnedVehiclesIds)
-            {
-                listOfOwnedVehicles.Add(await _vehicleRepository.GetById(id));
-                
-            }
-
-            return listOfOwnedVehicles;
+            return await _ownershipRepository.GetVehiclesByOwnerId(ownerId);
         }
 
 
+        public async Task<Vehicle?> GetVehicleById(int vehicleId)
+        {
+            return await _vehicleRepository.GetById(vehicleId);
+        }
         
 
 

@@ -29,6 +29,14 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<ReadOnlyAppointmentDTO> Get([FromRoute]int appointmentId)
+        {
+            var appointment = await _service.GetById(appointmentId);
+            return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
+        }
+
+
 
     }
 }

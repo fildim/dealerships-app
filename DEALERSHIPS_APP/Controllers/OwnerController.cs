@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DEALERSHIPS_APP.DTOS.Owner;
+using DEALERSHIPS_APP.DTOS.Vehicle;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
 using FluentValidation;
@@ -44,6 +45,16 @@ namespace DEALERSHIPS_APP.Controllers
         {
             await _service.InitialBindVehicle(ownerId, vehicleId);
         }
+
+
+        [HttpGet("{ownerId:int}/[action]")]
+        public async Task<List<ReadOnlyVehicleDTO>> GetBindedVehicles([FromRoute]int ownerId)
+        {
+            var listOfBindedVehicles = await _service.GetBindedVehicles(ownerId);
+            return _mapper.Map<List<ReadOnlyVehicleDTO>>(listOfBindedVehicles);
+        }
+
+
 
 
 

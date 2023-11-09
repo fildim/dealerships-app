@@ -41,6 +41,13 @@ namespace DEALERSHIPS_APP.Repositories
         }
 
 
+        public async Task SetDiagnosis(int appointmentId, string diagnosis)
+        {
+            var appointment = await _dbContext.Appointments.Where(x => x.Id == appointmentId).SingleOrDefaultAsync();
+            appointment.Diagnosis = diagnosis;
+            await _dbContext.SaveChangesAsync();
+        }
+
 
     }
 }

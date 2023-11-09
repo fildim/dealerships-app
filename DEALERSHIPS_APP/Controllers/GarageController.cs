@@ -27,7 +27,7 @@ namespace DEALERSHIPS_APP.Controllers
             await _service.Create(garage);
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public async Task<ReadOnlyGarageDTO> Get([FromRoute]int id)
         {
             var garage = await _service.GetById(id);
