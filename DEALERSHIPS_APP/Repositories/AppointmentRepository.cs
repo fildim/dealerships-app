@@ -7,6 +7,9 @@ namespace DEALERSHIPS_APP.Repositories
     {
         Task Create (Appointment appointment);
         Task<Appointment?> Get(int vehicleId, DateTime dateOfArrival);
+        Task<List<Appointment>?> GetAllByGarageId(int garageId);
+        Task<List<Appointment>?> GetAllByGarageIdForOwnerId(int garageId, int ownerId);
+        Task<List<Appointment>?> GetAllByOwnerId(int ownerId);
         Task<Appointment?> GetById(int id);
     }
 
@@ -46,6 +49,21 @@ namespace DEALERSHIPS_APP.Repositories
             var appointment = await _dbContext.Appointments.Where(x => x.Id == appointmentId).SingleOrDefaultAsync();
             appointment.Diagnosis = diagnosis;
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Appointment>?> GetAllByOwnerId(int ownerId)
+        {
+            return await _dbContext.Appointments.Where(x => x.OwnerId == ownerId).ToListAsync();
+        }
+
+        public async Task<List<Appointment>?> GetAllByGarageId(int garageId)
+        {
+            return await _dbContext.Appointments.Where(x => x.GarageId == garageId).ToListAsync();
+        }
+
+        public async Task<List<Appointment>?> GetAllByGarageIdForOwnerId(int garageId, int ownerId)
+        {
+            return await _dbContext.Appointments.Where(x => x.GarageId == garageId &&  x.OwnerId == ownerId).ToListAsync();
         }
 
 

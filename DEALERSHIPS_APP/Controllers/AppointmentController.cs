@@ -29,7 +29,7 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{appointmentId:int}")]
         public async Task<ReadOnlyAppointmentDTO> Get([FromRoute]int appointmentId)
         {
             var appointment = await _service.GetById(appointmentId);

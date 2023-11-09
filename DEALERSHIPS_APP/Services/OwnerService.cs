@@ -8,6 +8,8 @@ namespace DEALERSHIPS_APP.Services
     public interface IOwnerService
     {
         Task Create(Owner owner);
+        Task<List<Appointment>> GetAllAppointmentsById(int ownerId);
+        Task<Appointment> GetAppointmentById(int ownerId, int appointmentId);
         Task<List<Vehicle>> GetBindedVehicles(int ownerId);
         Task<Owner> GetById(int id);
         Task<Owner> GetByPhone(string phone);
@@ -22,10 +24,11 @@ namespace DEALERSHIPS_APP.Services
         private readonly IOwnershipRepository _ownershipRepository;
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IOwnershipHistoryRepository _ownershipHistoryRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMapper _mapper;
         private readonly IDBTransactionService _dbTransactionService;
 
-        public OwnerService(IOwnerRepository repository, IOwnershipRepository ownershipRepository, IVehicleRepository vehicleRepository, IOwnershipHistoryRepository ownershipHistoryRepository, IMapper mapper, IDBTransactionService dbTransactionService)
+        public OwnerService(IOwnerRepository repository, IOwnershipRepository ownershipRepository, IVehicleRepository vehicleRepository, IOwnershipHistoryRepository ownershipHistoryRepository, IMapper mapper, IDBTransactionService dbTransactionService, IAppointmentRepository appointmentRepository)
         {
             this._ownerRepository = repository;
             _ownershipRepository = ownershipRepository;
@@ -33,6 +36,7 @@ namespace DEALERSHIPS_APP.Services
             _ownershipHistoryRepository = ownershipHistoryRepository;
             _mapper = mapper;
             _dbTransactionService = dbTransactionService;
+            _appointmentRepository = appointmentRepository;
         }
 
 
@@ -151,6 +155,31 @@ namespace DEALERSHIPS_APP.Services
         public async Task<Vehicle?> GetVehicleById(int vehicleId)
         {
             return await _vehicleRepository.GetById(vehicleId);
+        }
+
+
+        public async Task<List<Appointment>> GetAllAppointmentsById(int ownerId)
+        {
+            var listOfAppointments = await _appointmentRepository.GetAllByOwnerId(ownerId);
+            
+            if (listOfAppointments == null)
+            {
+                throw new EntityNotFoundException($"Owner with id = '{ownerId}' has no appointments");
+            }
+
+            return listOfAppointments;
+        }
+
+        public async Task<Appointment> GetAppointmentById(int ownerId, int appointmentId)
+        {
+            var appointment = await _appointmentRepository.GetById(appointmentId);
+
+            if (appointment == null || !appointment.OwnerId.Equals(ownerId))
+            {
+                throw new EntityNotFoundException($"Appointment with id = '{appointmentId}' not found");
+            }
+
+            return appointment;
         }
         
 
