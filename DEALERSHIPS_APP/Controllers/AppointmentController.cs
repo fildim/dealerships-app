@@ -6,37 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DEALERSHIPS_APP.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AppointmentController : ControllerBase
-    {
-        private readonly IAppointmentService _service;
-        private readonly IMapper _mapper;
+	[ApiController]
+	[Route("api/[controller]")]
+	public class AppointmentController : ControllerBase
+	{
+		private readonly IAppointmentService _service;
+		private readonly IMapper _mapper;
 
-        public AppointmentController(IAppointmentService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
+		public AppointmentController(IAppointmentService service, IMapper mapper)
+		{
+			_service = service;
+			_mapper = mapper;
+		}
 
+		[HttpPost]
+		public async Task Create([FromBody] CreateAppointmentDTO dto)
+		{
+			var appointment = _mapper.Map<Appointment>(dto);
 
-        [HttpPost]
-        public async Task Create([FromBody]CreateAppointmentDTO dto)
-        {
-            var appointment = _mapper.Map<Appointment>(dto);
+			await _service.Create(appointment);
+		}
 
-            await _service.Create(appointment);
-        }
+		[HttpGet("{id:int}")]
+		public async Task<AppointmentDTO> Get([FromRoute] int id)
+		{
+			var appointment = await _service.GetById(id);
 
-
-        [HttpGet("{appointmentId:int}")]
-        public async Task<ReadOnlyAppointmentDTO> Get([FromRoute]int appointmentId)
-        {
-            var appointment = await _service.GetById(appointmentId);
-            return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
-        }
-
-
-
-    }
+			return _mapper.Map<AppointmentDTO>(appointment);
+		}
+	}
 }

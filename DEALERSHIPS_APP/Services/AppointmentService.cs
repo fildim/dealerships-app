@@ -4,50 +4,61 @@ using DEALERSHIPS_APP.Repositories;
 
 namespace DEALERSHIPS_APP.Services
 {
-    public interface IAppointmentService
-    {
-        Task Create(Appointment appointment);
-        Task<Appointment> GetById(int id);
-    }
+	public interface IAppointmentService
+	{
+		Task Create(Appointment appointment);
+		Task<Appointment> GetById(int id);
+		Task SetDiagnosis(int appointmentId, string diagnosis);
+	}
 
+	public class AppointmentService : IAppointmentService
+	{
+		private readonly IAppointmentRepository _repository;
 
-    public class AppointmentService : IAppointmentService
-    {
-        private readonly IAppointmentRepository _appointmentRepository;
+		public AppointmentService(IAppointmentRepository repository)
+		{
+			_repository = repository;
+		}
 
-        public AppointmentService(IAppointmentRepository repository)
-        {
-            this._appointmentRepository = repository;
-        }
+		public async Task Create(Appointment appointment)
+		{
+			var appointmentCheck = await _repository.GetByVehicleIdAndDateOfArrival(appointment.VehicleId, appointment.DateOfArrival);
 
+			if (appointmentCheck != null)
+			{
+				throw new EntityAlreadyExistsException($"Appointment with vehicle id = '{appointment.VehicleId}' and date of arrival = '{appointment.DateOfArrival}' already exists");
+			}
 
+			appointment.Created = DateTime.Now;
+			await _repository.Create(appointment);
+		}
 
+		public async Task<Appointment> GetById(int id)
+		{
+			var appointment = await _repository.GetById(id);
 
-        public async Task Create(Appointment appointment)
-        {
-            var appointmentCheck = await _appointmentRepository.Get(appointment.VehicleId, appointment.DateOfArrival); 
+			if (appointment == null)
+			{
+				throw new EntityNotFoundException($"Appointment with id = '{id}' not found");
+			}
 
-            if (appointmentCheck != null)
-            {
-                throw new EntityAlreadyExistsException($"Appointment with vehicle id = '{appointment.VehicleId}' and date of arrival = '{appointment.DateOfArrival}' already exists");
-            }
+			return appointment;
+		}
 
-            appointment.Created = DateTime.Now;
-            await _appointmentRepository.Create(appointment);
-        }
+		//todo implement in controller
+		public async Task SetDiagnosis(int appointmentId, string diagnosis)
+		{
+			var appointment = await _repository.GetById(appointmentId);
 
-        public async Task<Appointment> GetById(int id)
-        {
-            var appointment = await _appointmentRepository.GetById(id);
+			if (appointment == null)
+			{
+				throw new EntityNotFoundException($"Appointment with id = '{appointmentId}' not found");
+			}
 
-            if (appointment == null)
-            {
-                throw new EntityNotFoundException($"Appointment with id = '{id}' not found");
-            }
+			appointment.Diagnosis = diagnosis;
+			appointment.Updated = DateTime.Now;
 
-            return appointment;
-        }
-
-
-    }
+			await _repository.Update(appointment);
+		}
+	}
 }

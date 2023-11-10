@@ -4,13 +4,12 @@ using DEALERSHIPS_APP.Models;
 
 namespace DEALERSHIPS_APP.Mappings
 {
-    public class AppointmentMapper : Profile
-    {
-        public AppointmentMapper()
-        {
-            CreateMap<CreateAppointmentDTO, Appointment>();
-            CreateMap<Appointment, ReadOnlyAppointmentDTO>();
-        }
-
-    }
+	public class AppointmentMapper : Profile
+	{
+		public AppointmentMapper()
+		{
+			CreateMap<CreateAppointmentDTO, Appointment>();
+			CreateMap<Appointment, AppointmentDTO>();
+		}
+	}
 }

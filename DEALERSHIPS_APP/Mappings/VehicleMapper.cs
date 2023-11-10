@@ -4,11 +4,11 @@ using DEALERSHIPS_APP.Models;
 
 namespace DEALERSHIPS_APP.Mappings
 {
-    public class VehicleMapper : Profile
-    {
-        public VehicleMapper()
-        {
-            CreateMap<Vehicle, ReadOnlyVehicleDTO>();
-        }
-    }
+	public class VehicleMapper : Profile
+	{
+		public VehicleMapper()
+		{
+			CreateMap<Vehicle, VehicleDTO>();
+		}
+	}
 }

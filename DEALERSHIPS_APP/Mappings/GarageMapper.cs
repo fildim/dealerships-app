@@ -4,12 +4,12 @@ using DEALERSHIPS_APP.Models;
 
 namespace DEALERSHIPS_APP.Mappings
 {
-    public class GarageMapper : Profile
-    {
-        public GarageMapper()
-        {
-            CreateMap<CreateGarageDTO, Models.Garage>();
-            CreateMap<Garage, ReadOnlyGarageDTO>();
-        }
-    }
+	public class GarageMapper : Profile
+	{
+		public GarageMapper()
+		{
+			CreateMap<CreateGarageDTO, Garage>();
+			CreateMap<Garage, GarageDTO>();
+		}
+	}
 }
