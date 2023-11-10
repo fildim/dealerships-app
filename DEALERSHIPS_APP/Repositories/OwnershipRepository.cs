@@ -7,6 +7,7 @@ namespace DEALERSHIPS_APP.Repositories
     {
         Task Create(Ownership ownership);
         Task<List<int>> GetAllVehicleIds();
+        Task<List<Vehicle>> GetVehiclesByOwnerId(int ownerId);
     }
 
     public class OwnershipRepository : IOwnershipRepository
@@ -28,5 +29,13 @@ namespace DEALERSHIPS_APP.Repositories
             _dbContext.Ownerships.Add(ownership);
             await _dbContext.SaveChangesAsync();
         }
+
+
+        public async Task<List<Vehicle>> GetVehiclesByOwnerId(int ownerId)
+        {
+            return await _dbContext.Ownerships.Where(x => x.OwnerId == ownerId).Select(x => x.Vehicle).ToListAsync();
+        }
+
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using DEALERSHIPS_APP.DTOS.Appointment;
 using DEALERSHIPS_APP.DTOS.Owner;
+using DEALERSHIPS_APP.DTOS.Vehicle;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
 using FluentValidation;
@@ -44,6 +46,30 @@ namespace DEALERSHIPS_APP.Controllers
         {
             await _service.InitialBindVehicle(ownerId, vehicleId);
         }
+
+
+        [HttpGet("{ownerId:int}/[action]")]
+        public async Task<List<ReadOnlyVehicleDTO>> GetBindedVehicles([FromRoute]int ownerId)
+        {
+            var listOfBindedVehicles = await _service.GetBindedVehicles(ownerId);
+            return _mapper.Map<List<ReadOnlyVehicleDTO>>(listOfBindedVehicles);
+        }
+
+        [HttpGet("{ownerId:int}/[action]")]
+        public async Task<List<ReadOnlyAppointmentDTO>> GetAppointments([FromRoute]int ownerId)
+        {
+            var listOfAppointments = await _service.GetAllAppointmentsById(ownerId);
+            return _mapper.Map<List<ReadOnlyAppointmentDTO>>(listOfAppointments);
+        }
+
+        [HttpGet("{onwerId:int}/[action]/{appointmentId:int}")]
+        public async Task<ReadOnlyAppointmentDTO> GetAppointmentById([FromRoute] int ownerId, [FromRoute] int appointmentId)
+        {
+            var appointment = await _service.GetAppointmentById(ownerId, appointmentId);
+            return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
+        }
+
+
 
 
 
