@@ -1,14 +1,18 @@
-﻿namespace DEALERSHIPS_APP.DTOS.Appointment
+﻿using DEALERSHIPS_APP.DTOS.Garage;
+using DEALERSHIPS_APP.DTOS.Owner;
+using DEALERSHIPS_APP.DTOS.Vehicle;
+
+namespace DEALERSHIPS_APP.DTOS.Appointment
 {
     public class ReadOnlyAppointmentDTO
     {
         public int Id { get; set; }
 
-        public int OwnerId { get; set; }
+        public ReadOnlyOwnerDTO Owner { get; set; }
 
-        public int VehicleId { get; set; }
+        public ReadOnlyVehicleDTO Vehicle { get; set; }
 
-        public int GarageId { get; set; }
+        public ReadOnlyGarageDTO Garage { get; set; }
 
         public DateTime DateOfArrival { get; set; }
 
@@ -19,7 +23,5 @@
         public DateTime? DateOfPickup { get; set; }
 
         public DateTime Created { get; set; }
-
-        public DateTime? Updated { get; set; }
     }
 }

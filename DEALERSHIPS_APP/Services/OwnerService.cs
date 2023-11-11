@@ -148,7 +148,14 @@ namespace DEALERSHIPS_APP.Services
 
         public async Task<List<Vehicle>> GetBindedVehicles(int ownerId)
         {
-            return await _ownershipRepository.GetVehiclesByOwnerId(ownerId);
+            var listOfVehicles = await _ownershipRepository.GetVehiclesByOwnerId(ownerId);
+
+            if (listOfVehicles.Count == 0)
+            {
+                throw new EntityNotFoundException($"Owner with id = '{ownerId}' has no binded vehicles");
+            }
+
+            return listOfVehicles;
         }
 
 
@@ -164,7 +171,7 @@ namespace DEALERSHIPS_APP.Services
             
             if (listOfAppointments == null)
             {
-                throw new EntityNotFoundException($"Owner with id = '{ownerId}' has no appointments");
+                return new List<Appointment>();
             }
 
             return listOfAppointments;
@@ -174,7 +181,7 @@ namespace DEALERSHIPS_APP.Services
         {
             var appointment = await _appointmentRepository.GetById(appointmentId);
 
-            if (appointment == null || !appointment.OwnerId.Equals(ownerId))
+            if (appointment == null || appointment.OwnerId != ownerId)
             {
                 throw new EntityNotFoundException($"Appointment with id = '{appointmentId}' not found");
             }

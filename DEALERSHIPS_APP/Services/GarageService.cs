@@ -70,11 +70,6 @@ namespace DEALERSHIPS_APP.Services
         {
             var listOfAppointments = await _appointmentRepository.GetAllByGarageId(garageId);
 
-            if (listOfAppointments == null)
-            {
-                throw new EntityNotFoundException($"Garage with id = '{garageId}' has no appointments");
-            }
-
             return listOfAppointments;
         }
 
@@ -82,11 +77,6 @@ namespace DEALERSHIPS_APP.Services
         public async Task<List<Appointment>> GetAllAppoinmentsByOwnerId(int garageId, int ownerId)
         {
             var listOfAppointments = await _appointmentRepository.GetAllByGarageIdForOwnerId(garageId, ownerId);
-
-            if (listOfAppointments == null)
-            {
-                throw new EntityNotFoundException($"Garage with id = '{garageId}' has no appointments for owner with id = '{ownerId}'");
-            }
 
             return listOfAppointments;
         }

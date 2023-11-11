@@ -50,7 +50,7 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
-        [HttpGet("{garageId:int}/[action]/{appoinmentId:int}")]
+        [HttpGet("{garageId:int}/[action]/{appointmentId:int}")]
         public async Task<ReadOnlyAppointmentDTO> GetAppointmentById([FromRoute] int garageId, [FromRoute] int appointmentId)
         {
             var appointment = await _service.GetAppointmentById(garageId, appointmentId);
