@@ -17,6 +17,18 @@ export class GarageService {
         return this.httpClient.post(`${enviroment.applicationUrl}/api/garage`, garage);
     }
 
+    public getAppointments(id: number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/garage/${id}/GetAppointments`);
+    }
+
+    public getAppointmentById(id: number, appointmentId: number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/garage/${id}/GetAppointmentById/${appointmentId}`);
+    }
+
+    public getAppointmentsForOwnerId(id: number, ownerId : number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/garage/${id}/GetAppointmentsForOwnerId/${ownerId}`);
+    }
+
     
 
 

@@ -8,10 +8,10 @@ namespace DEALERSHIPS_APP.Services
     {
         Task Create(Garage garage);
         Task<List<Appointment>> GetAllAppoinmentsByOwnerId(int garageId, int ownerId);
-        Task<List<Appointment>> GetAllAppointmentsByGarageId(int garageId);
-        Task<Appointment> GetAppointmentById(int garageId, int appointmentId);
+        Task<List<Appointment>> GetAppointments(int garageId);
+        Task<Appointment> GetAppointmentByAppointmentId(int garageId, int appointmentId);
         Task<Garage> GetById(int id);
-        Task<Garage> GetByPhone(string phone);
+        
     }
 
 
@@ -54,19 +54,8 @@ namespace DEALERSHIPS_APP.Services
             return garage;
         }
 
-        public async Task<Garage> GetByPhone(string phone)
-        {
-            var garage = await _garageRepository.GetByPhone(phone);
 
-            if (garage == null)
-            {
-                throw new EntityNotFoundException($"Garage with phone = '{phone}' not found");
-            }
-
-            return garage;
-        }
-
-        public async Task<List<Appointment>> GetAllAppointmentsByGarageId(int garageId)
+        public async Task<List<Appointment>> GetAppointments(int garageId)
         {
             var listOfAppointments = await _appointmentRepository.GetAllByGarageId(garageId);
 
@@ -84,7 +73,7 @@ namespace DEALERSHIPS_APP.Services
 
 
 
-        public async Task<Appointment> GetAppointmentById(int garageId, int appointmentId)
+        public async Task<Appointment> GetAppointmentByAppointmentId(int garageId, int appointmentId)
         {
             var appointment = await _appointmentRepository.GetById(appointmentId);
 

@@ -9,7 +9,6 @@ using FluentValidation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 
 builder.Services.AddSwaggerGen();
 
@@ -63,20 +62,6 @@ builder.Services.AddControllers();
 builder.Host.UseSerilog((context, config) =>
 {
     config.ReadFrom.Configuration(context.Configuration);
-
-    
-    //.MinimumLevel.Debug()
-    //.MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
-    //.WriteTo.Console()
-    //.WriteTo.File(
-    //    "Logs/logs.txt",
-    //    rollingInterval: RollingInterval.Day,
-    //    outputTemplate: "[ { TimestampAttribute: dd-MM-yyyy HH:mm:ss } { SourceContext } { level } ] " +
-    //            "{ Message } { NewLine } { Exception } ",
-    //    retainedFileCountLimit: null,
-    //    fileSizeLimitBytes: null
-    //);
-    
 });
 
 
@@ -107,7 +92,6 @@ if (!app.Environment.IsDevelopment())
 
 
 
-app.UseStaticFiles();
 
 app.UseRouting();
 
@@ -120,8 +104,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-
-app.MapRazorPages();
 
 
 

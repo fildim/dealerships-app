@@ -9,10 +9,9 @@ namespace DEALERSHIPS_APP.Services
     {
         Task Create(Owner owner);
         Task<List<Appointment>> GetAllAppointmentsById(int ownerId);
-        Task<Appointment> GetAppointmentById(int ownerId, int appointmentId);
+        Task<Appointment> GetAppointmentByAppointmentId(int ownerId, int appointmentId);
         Task<List<Vehicle>> GetBindedVehicles(int ownerId);
         Task<Owner> GetById(int id);
-        Task<Owner> GetByPhone(string phone);
         Task InitialBindVehicle(int ownerId, int vehicleId);
     }
 
@@ -68,17 +67,6 @@ namespace DEALERSHIPS_APP.Services
             return owner;
         }
 
-        public async Task<Owner> GetByPhone(string phone)
-        {
-            var owner = await _ownerRepository.GetByPhone(phone);
-
-            if (owner == null)
-            {
-                throw new EntityNotFoundException($"Owner with phone = '{phone}' not found");
-            }
-
-            return owner;
-        }
 
         public async Task InitialBindVehicle(int ownerId, int vehicleId)
         {
@@ -168,16 +156,11 @@ namespace DEALERSHIPS_APP.Services
         public async Task<List<Appointment>> GetAllAppointmentsById(int ownerId)
         {
             var listOfAppointments = await _appointmentRepository.GetAllByOwnerId(ownerId);
-            
-            if (listOfAppointments == null)
-            {
-                return new List<Appointment>();
-            }
 
             return listOfAppointments;
         }
 
-        public async Task<Appointment> GetAppointmentById(int ownerId, int appointmentId)
+        public async Task<Appointment> GetAppointmentByAppointmentId(int ownerId, int appointmentId)
         {
             var appointment = await _appointmentRepository.GetById(appointmentId);
 

@@ -8,7 +8,7 @@ namespace DEALERSHIPS_APP.Mappings
     {
         public GarageMapper()
         {
-            CreateMap<CreateGarageDTO, Models.Garage>();
+            CreateMap<CreateGarageDTO, Garage>();
             CreateMap<Garage, ReadOnlyGarageDTO>();
         }
     }

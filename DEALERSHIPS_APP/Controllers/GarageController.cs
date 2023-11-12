@@ -32,31 +32,35 @@ namespace DEALERSHIPS_APP.Controllers
         public async Task<ReadOnlyGarageDTO> Get([FromRoute]int id)
         {
             var garage = await _service.GetById(id);
+
             return _mapper.Map<ReadOnlyGarageDTO>(garage);
         }
 
-        [HttpGet("{garageId:int}/[action]")]
-        public async Task<List<ReadOnlyAppointmentDTO>> GetAppointmentsByGarageId([FromRoute] int garageId)
+        [HttpGet("{id:int}/[action]")]
+        public async Task<List<ReadOnlyAppointmentDTO>> GetAppointments([FromRoute] int id)
         {
-            var listOfAppointments = await _service.GetAllAppointmentsByGarageId(garageId);
-            return _mapper.Map<List<ReadOnlyAppointmentDTO>>(listOfAppointments);
-        }
+            var listOfAppointments = await _service.GetAppointments(id);
 
-        [HttpGet("{garageId:int}/[action]/{ownerId:int}")]
-        public async Task<List<ReadOnlyAppointmentDTO>> GetAppointmentsByGarageIdForOwnerId([FromRoute] int garageId, [FromRoute] int ownerId)
-        {
-            var listOfAppointments = await _service.GetAllAppoinmentsByOwnerId(garageId, ownerId);
             return _mapper.Map<List<ReadOnlyAppointmentDTO>>(listOfAppointments);
         }
 
 
-        [HttpGet("{garageId:int}/[action]/{appointmentId:int}")]
-        public async Task<ReadOnlyAppointmentDTO> GetAppointmentById([FromRoute] int garageId, [FromRoute] int appointmentId)
+
+        [HttpGet("{id:int}/[action]/{appointmentId:int}")]
+        public async Task<ReadOnlyAppointmentDTO> GetAppointmentById([FromRoute] int id, [FromRoute] int appointmentId)
         {
-            var appointment = await _service.GetAppointmentById(garageId, appointmentId);
+            var appointment = await _service.GetAppointmentByAppointmentId(id, appointmentId);
             return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
         }
 
+
+        [HttpGet("{id:int}/[action]/{ownerId:int}")]
+        public async Task<List<ReadOnlyAppointmentDTO>> GetAppointmentsForOwnerId([FromRoute] int id, [FromRoute] int ownerId)
+        {
+            var listOfAppointments = await _service.GetAllAppoinmentsByOwnerId(id, ownerId);
+
+            return _mapper.Map<List<ReadOnlyAppointmentDTO>>(listOfAppointments);
+        }
 
     }
 }

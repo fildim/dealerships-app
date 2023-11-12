@@ -19,7 +19,6 @@ namespace DEALERSHIPS_APP.Middlewares
             try
             {
                 await next(context);
-
             } 
             catch (ValidationException e) 
             {
@@ -28,7 +27,6 @@ namespace DEALERSHIPS_APP.Middlewares
                 _logger.LogError(e, e.Message);
                 context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 await context.Response.WriteAsJsonAsync(JsonConvert.SerializeObject(errors));
-
             } 
             catch (EntityAlreadyExistsException e)
             {
@@ -42,9 +40,6 @@ namespace DEALERSHIPS_APP.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 await context.Response.WriteAsJsonAsync(e.Message);
             }
-            
-            
-            
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);

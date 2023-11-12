@@ -17,7 +17,18 @@ export class OwnerService {
         return this.httpClient.post(`${enviroment.applicationUrl}/api/owner`, owner);
     }
 
+    public getBindedVehicles(id: number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetBindedVehicles`);
+    }
     
+    public getAppointments(id: number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointments`);
+    }
+
+    public getAppointmentById(id: number, appointmentId: number) {
+        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
+    }
+
 
 
 }

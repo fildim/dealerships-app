@@ -11,15 +11,7 @@ namespace DEALERSHIPS_APP.Mappings
         {
             CreateMap<CreateAppointmentDTO, Appointment>();
             CreateMap<Appointment, ReadOnlyAppointmentDTO>();
-             //   .ConstructUsing((x,y) => {
-             //   var owner = y.Mapper.Map<ReadOnlyOwnerDTO>(x.Owner);
-             //   return new ReadOnlyAppointmentDTO
-             //   {
-             //       Id = x.Id,
-             //       Owner = owner,
-
-             //   };
-             //});
+            
         }
 
     }

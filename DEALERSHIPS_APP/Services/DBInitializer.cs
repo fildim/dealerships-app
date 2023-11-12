@@ -194,45 +194,6 @@ namespace DEALERSHIPS_APP.Services
 
             _dbContext.SaveChanges();
             
-
-            //        var ownerships = new List<Ownership>
-            //{
-            //    new Ownership
-            //    {
-            //        Id = 1,
-            //        Created = DateTime.Now,
-            //        OwnerId = 1,
-            //        VehicleId = 1
-            //    },
-            //    new Ownership
-            //    {
-            //        Id = 2,
-            //        Created = DateTime.Now,
-            //        OwnerId = 2,
-            //        VehicleId = 2
-            //    },
-            //    new Ownership
-            //    {
-            //        Id = 3,
-            //        Created = DateTime.Now,
-            //        OwnerId = 3,
-            //        VehicleId = 3
-            //    },
-            //    new Ownership
-            //    {
-            //        Id = 4,
-            //        Created = DateTime.Now,
-            //        OwnerId = 4,
-            //        VehicleId = 4
-            //    },
-            //    new Ownership
-            //    {
-            //        Id = 5,
-            //        Created = DateTime.Now,
-            //        OwnerId = 5,    
-            //        VehicleId = 5
-            //    }
-            //};
         }
     }
 }

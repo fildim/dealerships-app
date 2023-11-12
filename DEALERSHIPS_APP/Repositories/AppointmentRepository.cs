@@ -1,5 +1,6 @@
 ﻿using DEALERSHIPS_APP.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace DEALERSHIPS_APP.Repositories
 {
@@ -11,6 +12,7 @@ namespace DEALERSHIPS_APP.Repositories
         Task<List<Appointment>> GetAllByGarageIdForOwnerId(int garageId, int ownerId);
         Task<List<Appointment>> GetAllByOwnerId(int ownerId);
         Task<Appointment?> GetById(int id);
+        Task Update(Appointment appointment);
     }
 
 
@@ -43,13 +45,7 @@ namespace DEALERSHIPS_APP.Repositories
             return await _dbContext.Appointments.SingleOrDefaultAsync(x => x.VehicleId == vehicleId && x.DateOfArrival == dateOfArrival);
         }
 
-
-        public async Task SetDiagnosis(int appointmentId, string diagnosis)
-        {
-            var appointment = await _dbContext.Appointments.Where(x => x.Id == appointmentId).SingleOrDefaultAsync();
-            appointment.Diagnosis = diagnosis;
-            await _dbContext.SaveChangesAsync();
-        }
+        
 
         public async Task<List<Appointment>> GetAllByOwnerId(int ownerId)
         {
@@ -64,6 +60,12 @@ namespace DEALERSHIPS_APP.Repositories
         public async Task<List<Appointment>> GetAllByGarageIdForOwnerId(int garageId, int ownerId)
         {
             return await _dbContext.Appointments.Where(x => x.GarageId == garageId &&  x.OwnerId == ownerId).ToListAsync();
+        }
+
+        public async Task Update(Appointment appointment)
+        {
+            _dbContext.Appointments.Update(appointment);
+            await _dbContext.SaveChangesAsync();
         }
 
 

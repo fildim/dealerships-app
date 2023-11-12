@@ -29,10 +29,11 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
-        [HttpGet("{appointmentId:int}")]
+        [HttpGet("{id:int}")]
         public async Task<ReadOnlyAppointmentDTO> Get([FromRoute]int id)
         {
             var appointment = await _service.GetById(id);
+
             return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace DEALERSHIPS_APP.Models;
 
 public partial class Garage
