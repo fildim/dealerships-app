@@ -45,6 +45,7 @@ builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IOwnershipHistoryRepository, OwnershipHistoryRepository>();
 builder.Services.AddScoped<IOwnershipRepository, OwnershipRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<ILoginCredentialRepository, LoginCredentialRepository>();
 
 
 

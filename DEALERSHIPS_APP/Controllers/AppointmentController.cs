@@ -2,12 +2,14 @@
 using DEALERSHIPS_APP.DTOS.Appointment;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEALERSHIPS_APP.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _service;
@@ -38,6 +40,6 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
-
+        //todo setdiagnosis implementation
     }
 }

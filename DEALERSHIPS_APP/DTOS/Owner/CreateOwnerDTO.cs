@@ -9,6 +9,7 @@ namespace DEALERSHIPS_APP.DTOS.Owner
         public string Lastname { get; set; } = null!;
 
         public string Phone { get; set; } = null!;
+        public string Password { get; set; } = null!;
 
 
 
