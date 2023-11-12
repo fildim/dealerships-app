@@ -3,13 +3,15 @@ using DEALERSHIPS_APP.DTOS.Appointment;
 using DEALERSHIPS_APP.DTOS.Garage;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEALERSHIPS_APP.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GarageController : ControllerBase
+	[Authorize]
+	public class GarageController : ControllerBase
     {
         private readonly IGarageService _service;
         private readonly IMapper _mapper;
@@ -21,6 +23,7 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task Create([FromBody]CreateGarageDTO dto)
         {
             var garage = _mapper.Map<Garage>(dto);

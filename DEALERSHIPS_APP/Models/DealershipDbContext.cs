@@ -25,6 +25,8 @@ public partial class DealershipDbContext : DbContext
 
     public virtual DbSet<Issue> Issues { get; set; }
 
+    public virtual DbSet<Logincredential> Logincredentials { get; set; }
+
     public virtual DbSet<Owner> Owners { get; set; }
 
     public virtual DbSet<Ownership> Ownerships { get; set; }
@@ -39,6 +41,12 @@ public partial class DealershipDbContext : DbContext
         modelBuilder.Entity<Appointment>(entity =>
         {
             entity.ToTable("APPOINTMENTS");
+
+            entity.HasIndex(e => e.GarageId, "IX_APPOINTMENTS_GARAGE_ID");
+
+            entity.HasIndex(e => e.OwnerId, "IX_APPOINTMENTS_OWNER_ID");
+
+            entity.HasIndex(e => e.VehicleId, "IX_APPOINTMENTS_VEHICLE_ID");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Created)
@@ -113,6 +121,8 @@ public partial class DealershipDbContext : DbContext
         {
             entity.ToTable("GARAGES");
 
+            entity.HasIndex(e => e.Phone, "UQ_GARAGES_PHONE").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Address)
                 .HasMaxLength(50)
@@ -132,6 +142,8 @@ public partial class DealershipDbContext : DbContext
         {
             entity.ToTable("ISSUES");
 
+            entity.HasIndex(e => e.AppointmentId, "IX_ISSUES_APPOINTMENT_ID");
+
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AppointmentId).HasColumnName("APPOINTMENT_ID");
             entity.Property(e => e.Created)
@@ -147,9 +159,29 @@ public partial class DealershipDbContext : DbContext
                 .HasConstraintName("FK_ISSUES_APPOINTMENTS");
         });
 
+        modelBuilder.Entity<Logincredential>(entity =>
+        {
+            entity.ToTable("LOGINCREDENTIALS");
+
+            entity.HasIndex(e => e.Phone, "UQ_LOGINCREDENTIALS_PHONE").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Created)
+                .HasColumnType("datetime")
+                .HasColumnName("CREATED");
+            entity.Property(e => e.Password)
+                .HasMaxLength(100)
+                .HasColumnName("PASSWORD");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .HasColumnName("PHONE");
+        });
+
         modelBuilder.Entity<Owner>(entity =>
         {
             entity.ToTable("OWNERS");
+
+            entity.HasIndex(e => e.Phone, "UQ_OWNERS_PHONE").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Created)
@@ -169,6 +201,10 @@ public partial class DealershipDbContext : DbContext
         modelBuilder.Entity<Ownership>(entity =>
         {
             entity.ToTable("OWNERSHIPS");
+
+            entity.HasIndex(e => e.OwnerId, "IX_OWNERSHIPS_OWNER_ID");
+
+            entity.HasIndex(e => e.VehicleId, "IX_OWNERSHIPS_VEHICLE_ID");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Created)
@@ -194,6 +230,16 @@ public partial class DealershipDbContext : DbContext
         modelBuilder.Entity<OwnershipHistory>(entity =>
         {
             entity.ToTable("OWNERSHIP_HISTORIES");
+
+            entity.HasIndex(e => e.CurrentOwnerId, "IX_OWNERSHIP_HISTORIES_CURRENT_OWNER_ID");
+
+            entity.HasIndex(e => e.DealershipId, "IX_OWNERSHIP_HISTORIES_DEALERSHIP_ID");
+
+            entity.HasIndex(e => e.FactoryId, "IX_OWNERSHIP_HISTORIES_FACTORY_ID");
+
+            entity.HasIndex(e => e.PreviousOwnerId, "IX_OWNERSHIP_HISTORIES_PREVIOUS_OWNER_ID");
+
+            entity.HasIndex(e => e.VehicleId, "IX_OWNERSHIP_HISTORIES_VEHICLE_ID");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Created)

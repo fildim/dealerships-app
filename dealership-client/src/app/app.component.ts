@@ -1,21 +1,30 @@
-import { ReadOwnerModel } from './models/owner/read.owner.model';
+import { FormGroup, FormControl } from '@angular/forms';
 import { OwnerService } from './services/owner.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  title = 'dealership-client';
-  owner? : ReadOwnerModel;
+export class AppComponent {
+  createOwnerForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    phone: new FormControl(''),
+    password: new FormControl('')
+  });
 
   constructor(private ownerService: OwnerService) {
-    ownerService.create({firstname: "fsdf", lastname: "fsfds", phone: "2432"}).subscribe();
   }
 
-  ngOnInit(): void {
-    this.ownerService.getById(1).subscribe(x => this.owner = x);
+  public onSubmit(): void {
+    debugger;
+    let firstName = this.createOwnerForm.get('firstName')?.value!;
+    let lastName = this.createOwnerForm.get('lastName')?.value!;
+    let phone = this.createOwnerForm.get('phone')?.value!;
+    let password = this.createOwnerForm.get('password')?.value!;
+
+    this.ownerService.create({ firstname: firstName, lastname: lastName, phone: phone, password: password }).subscribe();
   }
 }

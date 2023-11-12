@@ -5,13 +5,15 @@ using DEALERSHIPS_APP.DTOS.Vehicle;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEALERSHIPS_APP.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OwnerController : ControllerBase
+	[Authorize]
+	public class OwnerController : ControllerBase
     {
         private readonly IOwnerService _service;
         private readonly IMapper _mapper;
@@ -27,11 +29,12 @@ namespace DEALERSHIPS_APP.Controllers
 
 
         [HttpPost]
-        public async Task Create([FromBody]CreateOwnerDTO dto)
+        [AllowAnonymous]
+		public async Task Create([FromBody]CreateOwnerDTO dto)
         {
             await _validator.ValidateAndThrowAsync(dto);
             var owner = _mapper.Map<Owner>(dto);
-            await _service.Create(owner);
+            await _service.Create(owner, dto.Password);
         }
 
         [HttpGet("{id:int}")]

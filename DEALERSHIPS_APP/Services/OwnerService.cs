@@ -7,7 +7,7 @@ namespace DEALERSHIPS_APP.Services
 {
     public interface IOwnerService
     {
-        Task Create(Owner owner);
+        Task Create(Owner owner, string password);
         Task<List<Appointment>> GetAllAppointmentsById(int ownerId);
         Task<Appointment> GetAppointmentByAppointmentId(int ownerId, int appointmentId);
         Task<List<Vehicle>> GetBindedVehicles(int ownerId);
@@ -24,10 +24,19 @@ namespace DEALERSHIPS_APP.Services
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IOwnershipHistoryRepository _ownershipHistoryRepository;
         private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IMapper _mapper;
+		private readonly ILoginCredentialRepository _loginCredentialRepository;
+		private readonly IMapper _mapper;
         private readonly IDBTransactionService _dbTransactionService;
 
-        public OwnerService(IOwnerRepository repository, IOwnershipRepository ownershipRepository, IVehicleRepository vehicleRepository, IOwnershipHistoryRepository ownershipHistoryRepository, IMapper mapper, IDBTransactionService dbTransactionService, IAppointmentRepository appointmentRepository)
+        public OwnerService(
+			IOwnerRepository repository,
+			IOwnershipRepository ownershipRepository,
+			IVehicleRepository vehicleRepository,
+			IOwnershipHistoryRepository ownershipHistoryRepository,
+			IMapper mapper,
+			IDBTransactionService dbTransactionService,
+			IAppointmentRepository appointmentRepository,
+            ILoginCredentialRepository loginCredentialRepository)
         {
             this._ownerRepository = repository;
             _ownershipRepository = ownershipRepository;
@@ -36,12 +45,13 @@ namespace DEALERSHIPS_APP.Services
             _mapper = mapper;
             _dbTransactionService = dbTransactionService;
             _appointmentRepository = appointmentRepository;
-        }
+			_loginCredentialRepository = loginCredentialRepository;
+		}
 
 
 
 
-        public async Task Create(Owner owner)
+        public async Task Create(Owner owner, string password)
         {
             var ownerCheck = await _ownerRepository.GetByPhone(owner.Phone);
 
@@ -50,8 +60,33 @@ namespace DEALERSHIPS_APP.Services
                 throw new EntityAlreadyExistsException($"Owner with phone = '{owner.Phone}' already exists");
             }
 
-            owner.Created = DateTime.Now;
-            await _ownerRepository.Create(owner);
+            await _dbTransactionService.Begin();
+
+            try
+            {
+                var now = DateTime.Now;
+
+                var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt());
+
+				owner.Created = now;
+				await _ownerRepository.Create(owner);
+
+                var loginCredentials = new Logincredential
+                {
+                    Phone = owner.Phone,
+                    Password = encryptedPassword,
+                    Created = now
+				};
+
+                await _loginCredentialRepository.Create(loginCredentials);
+
+                await _dbTransactionService.Commit();
+			}
+            catch (Exception)
+            {
+				await _dbTransactionService.Rollback();
+				throw;
+			}
         }
 
 
