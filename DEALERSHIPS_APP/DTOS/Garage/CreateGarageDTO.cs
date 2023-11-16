@@ -10,6 +10,8 @@ namespace DEALERSHIPS_APP.DTOS.Garage
 
         public string Address { get; set; } = null!;
 
+        public string Password { get; set; } = null!;
+
 
     }
 }
