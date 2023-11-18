@@ -27,6 +27,13 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
 
+        [HttpPost("[action]")]
+        [AllowAnonymous]
+        public async Task<string> Login([FromBody]LoginOwnerDTO login)
+        {
+            return await _service.Login(login.Phone, login.Password);
+        }
+
 
         [HttpPost]
         [AllowAnonymous]

@@ -31,7 +31,7 @@ namespace DEALERSHIPS_APP.Controllers
         {
             await _validator.ValidateAndThrowAsync(dto);
             var garage = _mapper.Map<Garage>(dto);
-            await _service.Create(garage);
+            await _service.Create(garage, dto.Password);
         }
 
         [HttpGet("{id:int}")]

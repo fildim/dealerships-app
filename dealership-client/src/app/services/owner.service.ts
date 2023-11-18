@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { enviroment } from 'src/enviroments/enviroment';
 import { ReadOwnerModel } from '../models/owner/read.owner.model';
+import { LoginOwnerModel } from '../models/owner/login.owner.model';
 
 @Injectable()
 export class OwnerService {
@@ -29,6 +30,9 @@ export class OwnerService {
         return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
     }
 
+    public Login(loginCredentials: LoginOwnerModel) {
+        return this.httpClient.post(`${enviroment.applicationUrl}/api/owner/login`, loginCredentials);
+    }
 
 
 }

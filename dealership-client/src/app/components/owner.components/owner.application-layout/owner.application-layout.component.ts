@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,5 +20,10 @@ export class OwnerApplicationLayoutComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {}
+
+  logout() {
+    localStorage.removeItem("jwt");
+    this.router.navigateByUrl("/");
+  }
 }

@@ -19,7 +19,7 @@
         </button>
       </mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item routerLink="home" >Home</a>
+        <a mat-list-item routerLink="/owner-create-appointment" >Create appointment</a>
         <a mat-list-item routerLink="event-bind">Event Bind Example</a>
         <mat-expansion-panel
           style="box-shadow: none; font-size: 16px; margin-left: 0"
@@ -47,8 +47,8 @@
         >
           <mat-icon>menu</mat-icon>
         </button>
-        <span>Profile details</span>
-        <span class="">Logout</span>
+        <span >Profile details</span>
+        <button (click)="logout()">Logout</button>
       </mat-toolbar>
       <div class="container"><router-outlet></router-outlet></div>
       <footer class="footer">

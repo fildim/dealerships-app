@@ -2,6 +2,11 @@
 using DEALERSHIPS_APP.Exceptions;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace DEALERSHIPS_APP.Services
 {
@@ -13,6 +18,7 @@ namespace DEALERSHIPS_APP.Services
         Task<List<Vehicle>> GetBindedVehicles(int ownerId);
         Task<Owner> GetById(int id);
         Task InitialBindVehicle(int ownerId, int vehicleId);
+        Task<string> Login(string phone, string password);
     }
 
 
@@ -66,7 +72,7 @@ namespace DEALERSHIPS_APP.Services
             {
                 var now = DateTime.Now;
 
-                var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(password, "salt");
+                var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt());
 
 				owner.Created = now;
 				await _ownerRepository.Create(owner);
@@ -207,7 +213,7 @@ namespace DEALERSHIPS_APP.Services
             return appointment;
         }
 
-        public async Task Login(string phone, string password)
+        public async Task<string> Login(string phone, string password)
         {
             var loginCheck = await _loginCredentialRepository.GetByPhone(phone);
 
@@ -223,7 +229,21 @@ namespace DEALERSHIPS_APP.Services
                 throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
             }
 
-            
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var tokeOptions = new JwtSecurityToken(
+                issuer: "https://localhost:5001",
+                audience: "https://localhost:5001",
+                claims: new List<Claim>
+                {
+                    new Claim("userId", (await _ownerRepository.GetByPhone(phone))!.Id.ToString())
+                },
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: signinCredentials
+            );
+
+            return JsonConvert.SerializeObject(new JwtSecurityTokenHandler().WriteToken(tokeOptions));
         }
         
 
