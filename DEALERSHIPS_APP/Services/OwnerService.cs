@@ -66,7 +66,7 @@ namespace DEALERSHIPS_APP.Services
             {
                 var now = DateTime.Now;
 
-                var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt());
+                var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(password, "salt");
 
 				owner.Created = now;
 				await _ownerRepository.Create(owner);
@@ -205,6 +205,25 @@ namespace DEALERSHIPS_APP.Services
             }
 
             return appointment;
+        }
+
+        public async Task Login(string phone, string password)
+        {
+            var loginCheck = await _loginCredentialRepository.GetByPhone(phone);
+
+            if (loginCheck == null)
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not found");
+            }
+
+            var encryptedPassword = BCrypt.Net.BCrypt.Verify(password, loginCheck.Password);
+            
+            if (encryptedPassword == false)
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
+            }
+
+            
         }
         
 
