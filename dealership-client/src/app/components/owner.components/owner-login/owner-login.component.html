@@ -1,0 +1,22 @@
+<form [formGroup]="loginOwnerForm" (ngSubmit)="onSubmit()">
+
+    <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input matInput placeholder="Phone">
+          <mat-hint>Must be 10 numbers</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Password">
+          <mat-hint>Must be 8 characters</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <button type="submit" mat-flat-button color="primary">Submit</button>
+
+</form>
+
