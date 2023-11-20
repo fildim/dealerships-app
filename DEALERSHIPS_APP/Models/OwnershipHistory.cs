@@ -23,8 +23,6 @@ public partial class OwnershipHistory
 
     public DateTime Created { get; set; }
 
-    public DateTime? Updated { get; set; }
-
     public virtual Owner? CurrentOwner { get; set; }
 
     public virtual Dealership? Dealership { get; set; }

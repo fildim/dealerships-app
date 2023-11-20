@@ -5,15 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { OwnerService } from './services/owner.service';
 import { GarageService } from './services/garage.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonModule } from '@angular/material/button';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
-import { LoginComponent } from './components/utilities/login/login.component';
 import { OwnerGetAllBindedVehiclesComponent } from './components/owner.components/owner.get-all-binded-vehicles/owner.get-all-binded-vehicles.component';
 import { OwnerGetAllAppointmentsComponent } from './components/owner.components/owner.get-all-appointments/owner.get-all-appointments.component';
-import { GetAppointmentByIdComponent } from './components/utilities/get-appointment-by-id/get-appointment-by-id.component';
 import { OwnerInitialBindVehicleComponent } from './components/owner.components/owner.initial-bind-vehicle/owner.initial-bind-vehicle.component';
 import { OwnerCreateAppointmentComponent } from './components/owner.components/owner.create-appointment/owner.create-appointment.component';
 import { OwnerApplicationLayoutComponent } from './components/owner.components/owner.application-layout/owner.application-layout.component';
@@ -33,15 +31,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { OwnerRegisterComponent } from './components/owner.components/owner-register/owner-register.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppointmentService } from './services/appointment.service';
+import { TokenService, tokenGetter } from './services/token.service';
+import { OwnerAppointmentDetailsComponent } from './components/owner.components/owner-appointment-details/owner-appointment-details.component';
+import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     OwnerGetAllBindedVehiclesComponent,
     OwnerGetAllAppointmentsComponent,
-    GetAppointmentByIdComponent,
     OwnerInitialBindVehicleComponent,
     OwnerCreateAppointmentComponent,
     OwnerApplicationLayoutComponent,
@@ -52,6 +52,7 @@ import { AppointmentService } from './services/appointment.service';
     OwnerLoginComponent,
     WelcomePageComponent,
     OwnerRegisterComponent,
+    OwnerAppointmentDetailsComponent,
 
   ],
   imports: [
@@ -73,17 +74,20 @@ import { AppointmentService } from './services/appointment.service';
         allowedDomains: ["localhost:5161"],
         disallowedRoutes: []
       }
-    })
+    }),
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     OwnerService,
     GarageService,
-    AppointmentService
+    AppointmentService,
+    TokenService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-export function tokenGetter() { 
-  return localStorage.getItem("jwt"); 
-}
+

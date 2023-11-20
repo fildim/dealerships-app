@@ -179,11 +179,6 @@ namespace DEALERSHIPS_APP.Services
         {
             var listOfVehicles = await _ownershipRepository.GetVehiclesByOwnerId(ownerId);
 
-            if (listOfVehicles.Count == 0)
-            {
-                throw new EntityNotFoundException($"Owner with id = '{ownerId}' has no binded vehicles");
-            }
-
             return listOfVehicles;
         }
 
@@ -232,18 +227,22 @@ namespace DEALERSHIPS_APP.Services
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-            var tokeOptions = new JwtSecurityToken(
-                issuer: "https://localhost:5001",
-                audience: "https://localhost:5001",
+            var owner = await _ownerRepository.GetByPhone(phone);
+
+            var tokenOptions = new JwtSecurityToken(
+                issuer: "https://localhost:5161",
+                audience: "https://localhost:5161",
                 claims: new List<Claim>
                 {
-                    new Claim("userId", (await _ownerRepository.GetByPhone(phone))!.Id.ToString())
+                    new Claim("userId", owner!.Id.ToString()),
+                    new Claim("userFirstname", owner.Firstname),
+                    new Claim("userLastname", owner.Lastname)
                 },
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );
 
-            return JsonConvert.SerializeObject(new JwtSecurityTokenHandler().WriteToken(tokeOptions));
+            return JsonConvert.SerializeObject(new JwtSecurityTokenHandler().WriteToken(tokenOptions));
         }
         
 

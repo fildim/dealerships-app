@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { enviroment } from 'src/enviroments/enviroment';
 import { ReadOwnerModel } from '../models/owner/read.owner.model';
 import { LoginOwnerModel } from '../models/owner/login.owner.model';
+import { ReadAppointmentModel } from '../models/appointment/read.appointment.model';
+import { ReadVehicleModel } from '../models/vehicle/read.vehicle.model';
 
 @Injectable()
 export class OwnerService {
@@ -19,15 +21,15 @@ export class OwnerService {
     }
 
     public getBindedVehicles(id: number) {
-        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetBindedVehicles`);
+        return this.httpClient.get<ReadVehicleModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetBindedVehicles`);
     }
     
     public getAppointments(id: number) {
-        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointments`);
+        return this.httpClient.get<ReadAppointmentModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointments`);
     }
 
     public getAppointmentById(id: number, appointmentId: number) {
-        return this.httpClient.get(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
+        return this.httpClient.get<ReadAppointmentModel>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
     }
 
     public Login(loginCredentials: LoginOwnerModel) {

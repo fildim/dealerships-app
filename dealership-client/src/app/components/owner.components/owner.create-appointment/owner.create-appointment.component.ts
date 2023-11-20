@@ -1,7 +1,8 @@
-import { CreateAppointmentModel } from './../../../models/appointment/create.appointment.model';
+
 import { Component } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-owner.create-appointment',
@@ -10,21 +11,21 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 })
 export class OwnerCreateAppointmentComponent {
 
-  constructor(private appointmentService : AppointmentService, private jwtHelper: JwtHelperService) {}
+  constructor(private appointmentService : AppointmentService, private router : Router, 
+                      private tokenService: TokenService) {}
 
   
 
   onSubmit() {
-    let var1 = this.jwtHelper.decodeToken(localStorage.getItem("jwt")!)!;
-    let var2 = var1['userId'];
+    let ownerId = this.tokenService.getId();
 
     this.appointmentService.create({
-      ownerId: parseInt(var2),
+      ownerId: ownerId,
       vehicleId: 2,
       garageId: 2,
       dateOfArrival: new Date()
     }).subscribe({
-      next: x => console.log('success')
+      next: x => this.router.navigateByUrl('/owner-all-appointments')
     });
   }
 

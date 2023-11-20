@@ -42,24 +42,24 @@ namespace DEALERSHIPS_APP.Repositories
 
         public async Task<Appointment?> Get(int vehicleId, DateTime dateOfArrival)
         {
-            return await _dbContext.Appointments.SingleOrDefaultAsync(x => x.VehicleId == vehicleId && x.DateOfArrival == dateOfArrival);
+            return await _dbContext.Appointments.Include(x => x.Owner).Include(x => x.Vehicle).Include(x => x.Garage).SingleOrDefaultAsync(x => x.VehicleId == vehicleId && x.DateOfArrival == dateOfArrival);
         }
 
         
 
         public async Task<List<Appointment>> GetAllByOwnerId(int ownerId)
         {
-            return await _dbContext.Appointments.Where(x => x.OwnerId == ownerId).ToListAsync();
+            return await _dbContext.Appointments.Where(x => x.OwnerId == ownerId).Include(x => x.Vehicle).Include(x => x.Garage).ToListAsync();
         }
 
         public async Task<List<Appointment>> GetAllByGarageId(int garageId)
         {
-            return await _dbContext.Appointments.Where(x => x.GarageId == garageId).ToListAsync();
+            return await _dbContext.Appointments.Where(x => x.GarageId == garageId).Include(x => x.Owner).Include(x => x.Vehicle).ToListAsync();
         }
 
         public async Task<List<Appointment>> GetAllByGarageIdForOwnerId(int garageId, int ownerId)
         {
-            return await _dbContext.Appointments.Where(x => x.GarageId == garageId &&  x.OwnerId == ownerId).ToListAsync();
+            return await _dbContext.Appointments.Where(x => x.GarageId == garageId &&  x.OwnerId == ownerId).Include(x => x.Owner).Include(x => x.Vehicle).ToListAsync();
         }
 
         public async Task Update(Appointment appointment)

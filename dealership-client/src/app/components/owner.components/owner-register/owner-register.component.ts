@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { OwnerService } from './../../../services/owner.service';
 import { Component } from '@angular/core';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-owner-register',
@@ -9,7 +10,7 @@ import { Component } from '@angular/core';
 })
 export class OwnerRegisterComponent {
 
-  constructor(private service:  OwnerService, private router: Router) {}
+  constructor(private service:  OwnerService, private router: Router, private tokenService: TokenService) {}
 
   onSubmit() {
     this.service.create({
@@ -24,7 +25,7 @@ export class OwnerRegisterComponent {
         phone: "1234565555" 
       }).subscribe({
         next: x => { 
-          localStorage.setItem("jwt", x.toString());
+          this.tokenService.setToken(x.toString());
           this.router.navigateByUrl("owner-layout")},
         error: x => console.log("login error")
       })

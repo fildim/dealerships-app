@@ -258,9 +258,6 @@ public partial class DealershipDbContext : DbContext
             entity.Property(e => e.DealershipId).HasColumnName("DEALERSHIP_ID");
             entity.Property(e => e.FactoryId).HasColumnName("FACTORY_ID");
             entity.Property(e => e.PreviousOwnerId).HasColumnName("PREVIOUS_OWNER_ID");
-            entity.Property(e => e.Updated)
-                .HasColumnType("datetime")
-                .HasColumnName("UPDATED");
             entity.Property(e => e.VehicleId).HasColumnName("VEHICLE_ID");
 
             entity.HasOne(d => d.CurrentOwner).WithMany(p => p.OwnershipHistoryCurrentOwners)

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OwnerService } from 'src/app/services/owner.service';
+import { TokenService } from 'src/app/services/token.service';
+import { FormBuilder } from '@angular/forms';
+import { LoginOwnerModel } from 'src/app/models/owner/login.owner.model';
 
 @Component({
   selector: 'app-owner-login',
@@ -12,24 +13,36 @@ import { OwnerService } from 'src/app/services/owner.service';
 })
 export class OwnerLoginComponent {
 
-  constructor(private router : Router, private service : OwnerService) {}
-  loginOwnerForm = new FormGroup ({
+  constructor(
+    private router: Router,
+    private service: OwnerService,
+    private tokenService: TokenService,
+  ) { }
 
+
+  loginOwnerForm = new FormGroup({
+
+    phone: new FormControl([Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+    password: new FormControl([Validators.required, Validators.maxLength(8)])
   });
+
+
+
   onSubmit() {
     this.service.Login({
-      phone: "1234567890",
+      phone: String = this.loginOwnerForm. ,
       password: "12312312"
     }).subscribe({
-      next: x => { 
-        localStorage.setItem("jwt", x.toString());
-        this.router.navigateByUrl("owner-layout")},
+      next: x => {
+        this.tokenService.setToken(x.toString());
+        this.router.navigateByUrl("owner-layout")
+      },
       error: x => console.log("login error")
     });
 
-    
-    
-    
+
+
+
   }
 
 

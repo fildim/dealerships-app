@@ -18,12 +18,14 @@ namespace DEALERSHIPS_APP.Controllers
         private readonly IOwnerService _service;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateOwnerDTO> _validator;
+        private readonly IValidator<LoginOwnerDTO> _loginValidator;
 
-        public OwnerController(IOwnerService service, IMapper mapper, IValidator<CreateOwnerDTO> validator)
+        public OwnerController(IOwnerService service, IMapper mapper, IValidator<CreateOwnerDTO> validator, IValidator<LoginOwnerDTO> loginValidator)
         {
             _service = service;
             _mapper = mapper;
             _validator = validator;
+            _loginValidator = loginValidator;
         }
 
 
@@ -31,6 +33,7 @@ namespace DEALERSHIPS_APP.Controllers
         [AllowAnonymous]
         public async Task<string> Login([FromBody]LoginOwnerDTO login)
         {
+            await _loginValidator.ValidateAndThrowAsync(login);
             return await _service.Login(login.Phone, login.Password);
         }
 
