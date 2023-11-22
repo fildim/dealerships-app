@@ -29,15 +29,15 @@ export class OwnerLoginComponent {
 
   onSubmit() {
     this.service.Login({
-      phone: '',
-      password: ''
+      phone: ,
+      password: 
     }).subscribe({
-      next: x => {
-        this.tokenService.setToken(x.toString());
-        this.router.navigateByUrl("owner-layout")
-      },
-      error: x => console.log("login error")
-    });
+        next: x => {
+          this.tokenService.setToken(x.toString());
+          this.router.navigateByUrl("owner-layout")
+        },
+        error: x => console.log("login error")
+      });
 
 
 

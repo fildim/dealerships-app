@@ -68,5 +68,13 @@ namespace DEALERSHIPS_APP.Controllers
             return _mapper.Map<List<ReadOnlyAppointmentDTO>>(listOfAppointments);
         }
 
+        [HttpGet("[action]")]
+        public async Task<List<ReadOnlyGarageDTO>> GetAll()
+        {
+            var listOfGarages = await _service.GetAll();
+
+            return _mapper.Map<List<ReadOnlyGarageDTO>>(listOfGarages);
+        }
+
     }
 }

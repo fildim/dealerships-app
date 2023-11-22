@@ -7,6 +7,7 @@ namespace DEALERSHIPS_APP.Repositories
     public interface IGarageRepository
     {
         Task Create(Garage garage);
+        Task<List<Garage>> GetAll();
         Task<Garage?> GetById(int id);
         Task<Garage?> GetByPhone(string phone);
     }
@@ -36,6 +37,11 @@ namespace DEALERSHIPS_APP.Repositories
         public async Task<Garage?> GetByPhone(string phone)
         {
             return await _dbContext.Garages.SingleOrDefaultAsync(x => x.Phone == phone);
+        }
+
+        public async Task<List<Garage>> GetAll()
+        {
+            return await _dbContext.Garages.ToListAsync();
         }
 
 

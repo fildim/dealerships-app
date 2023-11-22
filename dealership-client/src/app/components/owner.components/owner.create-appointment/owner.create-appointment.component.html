@@ -1,3 +1,43 @@
-<p>owner.create-appointment works!</p>
+<div class="container col-md-6 mx-auto">
 
-<button (click)="onSubmit()">create appointment</button>
+    <form class="text-center" [formGroup]="createAppointmentForm" (ngSubmit)="onSubmit()">
+
+        <h4>Create Appointment Form</h4>
+
+        <mat-form-field>
+            <mat-label>Vehicles</mat-label>
+            <mat-select [(ngModel)]="vehicleControl" name="vehicle">
+                <mat-option>None</mat-option>
+                @for (vehicle of vehicles; track vehicle) {
+                <mat-option [value]="vehicle.value">{{ vehicle.viewValue }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <p>Selected: {{ vehicleControl.value }}</p>
+
+        <mat-form-field>
+            <mat-label>Garage</mat-label>
+            <mat-select [(ngModel)]="garageControl" name="garage">
+                <mat-option>None</mat-option>
+                @for (garage of garages; track garage) {
+                <mat-option [value]="garage.value">{{ garage.viewValue }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <p>Selected: {{ garageControl.value }}</p>
+
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [min]="minDate" [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button [disabled]="!loginOwnerForm.valid" type="submit" mat-flat-button color="primary">Create</button>
+
+    </form>
+
+</div>

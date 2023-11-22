@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TokenService } from 'src/app/services/token.service';
-import { ReadOwnerModel } from 'src/app/models/owner/read.owner.model';
 
 
 @Component({
@@ -22,13 +20,15 @@ export class OwnerApplicationLayoutComponent {
       shareReplay()
     );
 
-    
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router,
-                  private tokenService: TokenService) {}
 
-                  ownerFirstname: string =  this.tokenService.getFirstname();
-                  
+  constructor(
+    private breakpointObserver: BreakpointObserver, private router: Router,
+    private tokenService: TokenService
+  ) { }
+
+  ownerFirstname: string = this.tokenService.getFirstname();
+
 
 
   logout() {

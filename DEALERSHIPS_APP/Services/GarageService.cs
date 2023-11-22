@@ -11,7 +11,7 @@ namespace DEALERSHIPS_APP.Services
         Task<List<Appointment>> GetAppointments(int garageId);
         Task<Appointment> GetAppointmentByAppointmentId(int garageId, int appointmentId);
         Task<Garage> GetById(int id);
-        
+        Task<List<Garage>> GetAll();
     }
 
 
@@ -112,6 +112,18 @@ namespace DEALERSHIPS_APP.Services
             }
 
             return appointment;
+        }
+
+        public async Task<List<Garage>> GetAll()
+        {
+            var listOfGarages = await _garageRepository.GetAll();
+
+            if (listOfGarages == null)
+            {
+                throw new EntityNotFoundException("No garages found");
+            }
+
+            return listOfGarages;
         }
 
 
