@@ -1,3 +1,43 @@
-<p>owner-register works!</p>
+<div class="container col-md-6 mx-auto">
 
-<button (click)="onSubmit()" mat-flat-button  color="primary">Register</button>
+    <form class="text-center" [formGroup]="RegisterOwnerForm" (ngSubmit)="onSubmit()">
+
+        <h2 class="mt-5">Register Form</h2>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Firstname</mat-label>
+                <input formControlName="firstname" matInput placeholder="Firstname">
+                <mat-hint>Must be less than 50 characters</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Lastname</mat-label>
+                <input formControlName="lastname" matInput placeholder="Lastname">
+                <mat-hint>Must be less than 50 characters</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Phone</mat-label>
+                <input formControlName="phone" matInput placeholder="Phone">
+                <mat-hint>Must be 10 numbers</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput placeholder="Password">
+                <mat-hint>Must be 8 characters</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <button [disabled]="!RegisterOwnerForm.valid" type="submit" mat-flat-button color="primary">Register</button>
+
+    </form>
+
+</div>

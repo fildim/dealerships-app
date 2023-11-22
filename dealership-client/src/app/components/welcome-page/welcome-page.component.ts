@@ -4,11 +4,6 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-welcome-page',
-  // standalone: true,
-  // imports : [
-  //   RouterModule,
-  //   MatButtonModule
-  // ],
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
 })

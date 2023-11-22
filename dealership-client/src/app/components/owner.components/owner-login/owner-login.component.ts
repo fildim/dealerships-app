@@ -27,11 +27,10 @@ export class OwnerLoginComponent {
   });
 
 
-
   onSubmit() {
     this.service.Login({
-      phone: String = this.loginOwnerForm. ,
-      password: "12312312"
+      phone: '',
+      password: ''
     }).subscribe({
       next: x => {
         this.tokenService.setToken(x.toString());
