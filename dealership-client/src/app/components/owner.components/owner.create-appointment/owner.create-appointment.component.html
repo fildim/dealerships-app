@@ -1,4 +1,4 @@
-<div class="container col-md-6 mx-auto">
+<div class="container col-md-6 mx-auto mt-3">
 
     <form class="text-center" [formGroup]="createAppointmentForm" (ngSubmit)="onSubmit()">
 
@@ -6,37 +6,36 @@
 
         <mat-form-field>
             <mat-label>Vehicles</mat-label>
-            <mat-select [(ngModel)]="vehicleControl" name="vehicle">
+            <mat-select formControlName="vehicleId" name="vehicle">
                 <mat-option>None</mat-option>
-                @for (vehicle of vehicles; track vehicle) {
-                <mat-option [value]="vehicle.value">{{ vehicle.viewValue }}</mat-option>
-                }
+                <mat-option *ngFor="let vehicle of vehicleControl" [value]="vehicle.id">{{ vehicle.model }}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <p>Selected: {{ vehicleControl.value }}</p>
+        <p>Selected: {{ createAppointmentForm.controls.vehicleId.value }}</p>
 
         <mat-form-field>
-            <mat-label>Garage</mat-label>
-            <mat-select [(ngModel)]="garageControl" name="garage">
+            <mat-label>Garages</mat-label>
+            <mat-select formControlName="garageId" name="garage">
                 <mat-option>None</mat-option>
-                @for (garage of garages; track garage) {
-                <mat-option [value]="garage.value">{{ garage.viewValue }}</mat-option>
-                }
+                <mat-option *ngFor="let garage of garageControl" [value]="garage.id">{{ garage.name }}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <p>Selected: {{ garageControl.value }}</p>
+        <p>Selected: {{ createAppointmentForm.controls.garageId.value }}</p>
 
         <mat-form-field>
             <mat-label>Choose a date</mat-label>
-            <input matInput [min]="minDate" [matDatepicker]="picker">
+            <input formControlName="dateOfArrival" matInput [min]="minDate" [matDatepicker]="picker">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <button [disabled]="!loginOwnerForm.valid" type="submit" mat-flat-button color="primary">Create</button>
+        <div class="mt-3">
+            <button [disabled]="!createAppointmentForm.valid" type="submit" mat-flat-button
+                color="primary">Create</button>
+        </div>
 
     </form>
 

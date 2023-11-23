@@ -39,6 +39,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { GarageRegisterComponent } from './components/garage.components/garage-register/garage-register.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -58,6 +60,7 @@ import { MatTableModule } from '@angular/material/table';
     WelcomePageComponent,
     OwnerRegisterComponent,
     OwnerAppointmentDetailsComponent,
+    GarageRegisterComponent,
 
   ],
   imports: [
@@ -83,13 +86,13 @@ import { MatTableModule } from '@angular/material/table';
     MatDialogModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule,
     MatToolbarModule,
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatTableModule
+    MatTableModule,
+    MatNativeDateModule
   ],
   providers: [
     OwnerService,

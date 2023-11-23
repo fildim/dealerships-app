@@ -4,6 +4,7 @@ import { ReadGarageModel } from "../models/garage/read.garage.model";
 import { enviroment } from "src/enviroments/enviroment";
 import { CreateGarageModel } from "../models/garage/create.garage.model";
 import { ReadAppointmentModel } from "../models/appointment/read.appointment.model";
+import { LoginGarageModel } from "../models/garage/login.garage.model";
 
 @Injectable()
 export class GarageService {
@@ -34,6 +35,9 @@ export class GarageService {
         return this.httpClient.get<ReadGarageModel[]>(`${enviroment.applicationUrl}/api/garage/GetAll`);
     }
 
+    public Login(loginCredentials: LoginGarageModel) {
+        return this.httpClient.post(`${enviroment.applicationUrl}/api/garage/login`, loginCredentials);
+    }
 
 
 

@@ -1,6 +1,11 @@
 ﻿using DEALERSHIPS_APP.Exceptions;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace DEALERSHIPS_APP.Services
 {
@@ -12,6 +17,7 @@ namespace DEALERSHIPS_APP.Services
         Task<Appointment> GetAppointmentByAppointmentId(int garageId, int appointmentId);
         Task<Garage> GetById(int id);
         Task<List<Garage>> GetAll();
+        Task<string> Login(string phone, string password);
     }
 
 
@@ -124,6 +130,42 @@ namespace DEALERSHIPS_APP.Services
             }
 
             return listOfGarages;
+        }
+
+        public async Task<string> Login(string phone, string password)
+        {
+            var loginCheck = await _loginCredentialRepository.GetByPhone(phone);
+
+            if (loginCheck == null)
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not found");
+            }
+
+            var encryptedPassword = BCrypt.Net.BCrypt.Verify(password, loginCheck.Password);
+
+            if (encryptedPassword == false)
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
+            }
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var garage = await _garageRepository.GetByPhone(phone);
+
+            var tokenOptions = new JwtSecurityToken(
+                issuer: "https://localhost:5161",
+                audience: "https://localhost:5161",
+                claims: new List<Claim>
+                {
+                    new Claim("userId", garage!.Id.ToString()),
+                    new Claim("garageName", garage.Name.ToString()),
+                },
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: signinCredentials
+            );
+
+            return JsonConvert.SerializeObject(new JwtSecurityTokenHandler().WriteToken(tokenOptions));
         }
 
 

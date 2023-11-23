@@ -168,11 +168,7 @@ namespace DEALERSHIPS_APP.Services
                 await _dbTransactionService.Rollback();
                 throw;
             }
-        }
-
-
-
-       
+        }       
 
 
         public async Task<List<Vehicle>> GetBindedVehicles(int ownerId)

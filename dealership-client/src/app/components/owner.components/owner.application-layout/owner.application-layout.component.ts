@@ -28,7 +28,7 @@ export class OwnerApplicationLayoutComponent {
   ) { }
 
   ownerFirstname: string = this.tokenService.getFirstname();
-
+  ownerLastname: string = this.tokenService.getLastname();
 
 
   logout() {

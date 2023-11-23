@@ -1,22 +1,22 @@
 <div class="container col-md-6 mx-auto">
 
-    <form class="text-center" [formGroup]="RegisterOwnerForm" (ngSubmit)="onSubmit()">
+    <form class="text-center" [formGroup]="RegisterGarageForm" (ngSubmit)="onSubmit()">
 
         <h2 class="mt-5">Register Form</h2>
 
         <p>
             <mat-form-field appearance="fill">
-                <mat-label>Firstname</mat-label>
-                <input formControlName="firstname" matInput placeholder="Firstname">
-                <mat-hint>Must be less than 50 chars</mat-hint>
+                <mat-label>Name</mat-label>
+                <input formControlName="name" matInput placeholder="Name">
+                <mat-hint>Must be less than 50 characters</mat-hint>
             </mat-form-field>
         </p>
 
         <p>
             <mat-form-field appearance="fill">
-                <mat-label>Lastname</mat-label>
-                <input formControlName="lastname" matInput placeholder="Lastname">
-                <mat-hint>Must be less than 50 chars</mat-hint>
+                <mat-label>Address</mat-label>
+                <input formControlName="address" matInput placeholder="Address">
+                <mat-hint>Must be less than 50 characters</mat-hint>
             </mat-form-field>
         </p>
 
@@ -32,11 +32,11 @@
             <mat-form-field appearance="fill">
                 <mat-label>Password</mat-label>
                 <input formControlName="password" matInput placeholder="Password">
-                <mat-hint>Must be 8 chars</mat-hint>
+                <mat-hint>Must be 8 characters</mat-hint>
             </mat-form-field>
         </p>
 
-        <button [disabled]="!RegisterOwnerForm.valid" type="submit" mat-flat-button color="primary">Register</button>
+        <button [disabled]="!RegisterGarageForm.valid" type="submit" mat-flat-button color="primary">Register</button>
 
     </form>
 

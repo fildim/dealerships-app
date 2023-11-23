@@ -20,6 +20,7 @@ export class OwnerCreateAppointmentComponent implements OnInit {
 
   vehicleControl: ReadVehicleModel[] = [];
   garageControl: ReadGarageModel[] = [];
+  selectedValue: string = 'test';
 
   constructor(
     private appointmentService: AppointmentService,
@@ -29,7 +30,9 @@ export class OwnerCreateAppointmentComponent implements OnInit {
     private tokenService: TokenService
   ) {
 
-    this.minDate = new Date(new Date().getDay() + 1);
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 1);
+
   }
 
 
@@ -45,23 +48,12 @@ export class OwnerCreateAppointmentComponent implements OnInit {
 
   }
 
-
-
-
-
-
-
   createAppointmentForm = new FormGroup({
 
-    ownerId: new FormControl([Validators.required]),
-    vehicleId: new FormControl([Validators.required]),
-    garageId: new FormControl([Validators.required]),
-    dateOfArrival: new FormControl(new Date(), [Validators.required])
+    vehicleId: new FormControl("", [Validators.required]),
+    garageId: new FormControl("", [Validators.required]),
+    dateOfArrival: new FormControl("", [Validators.required])
   });
-
-
-
-
 
 
   onSubmit() {
@@ -69,12 +61,12 @@ export class OwnerCreateAppointmentComponent implements OnInit {
 
     this.appointmentService.create({
       ownerId: ownerId,
-      vehicleId: ,
-      garageId: this.garageControl[0].id,
-      dateOfArrival: 
+      vehicleId: parseInt(this.createAppointmentForm.controls.vehicleId.value!),
+      garageId: parseInt(this.createAppointmentForm.controls.garageId.value!),
+      dateOfArrival: new Date(this.createAppointmentForm.controls.dateOfArrival.value!)
     }).subscribe({
-        next: x => this.router.navigateByUrl('/owner-all-appointments')
-      });
+      next: x => this.router.navigateByUrl('/owner-all-appointments')
+    });
   }
 
 }

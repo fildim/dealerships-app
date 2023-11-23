@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DEALERSHIPS_APP.DTOS.Appointment;
 using DEALERSHIPS_APP.DTOS.Garage;
+using DEALERSHIPS_APP.DTOS.Owner;
 using DEALERSHIPS_APP.Models;
 using DEALERSHIPS_APP.Services;
 using FluentValidation;
@@ -11,23 +12,33 @@ namespace DEALERSHIPS_APP.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-	[Authorize]
-	public class GarageController : ControllerBase
+    [Authorize]
+    public class GarageController : ControllerBase
     {
         private readonly IGarageService _service;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateGarageDTO> _validator;
+        private readonly IValidator<LoginGarageDTO> _loginValidator;
 
-        public GarageController(IGarageService garageService, IMapper mapper, IValidator<CreateGarageDTO> validator)
+        public GarageController(IGarageService garageService, IMapper mapper, IValidator<CreateGarageDTO> validator, IValidator<LoginGarageDTO> loginValidator)
         {
             _service = garageService;
             _mapper = mapper;
             _validator = validator;
+            _loginValidator = loginValidator;
+        }
+
+        [HttpPost("[action]")]
+        [AllowAnonymous]
+        public async Task<string> Login([FromBody] LoginGarageDTO login)
+        {
+            await _loginValidator.ValidateAndThrowAsync(login);
+            return await _service.Login(login.Phone, login.Password);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task Create([FromBody]CreateGarageDTO dto)
+        public async Task Create([FromBody] CreateGarageDTO dto)
         {
             await _validator.ValidateAndThrowAsync(dto);
             var garage = _mapper.Map<Garage>(dto);
@@ -35,7 +46,7 @@ namespace DEALERSHIPS_APP.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ReadOnlyGarageDTO> Get([FromRoute]int id)
+        public async Task<ReadOnlyGarageDTO> Get([FromRoute] int id)
         {
             var garage = await _service.GetById(id);
 

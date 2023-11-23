@@ -19,23 +19,23 @@ export class OwnerRegisterComponent {
 
   RegisterOwnerForm = new FormGroup({
 
-    firstname: new FormControl([Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
-    lastname: new FormControl([Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
-    phone: new FormControl([Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
-    password: new FormControl([Validators.required, Validators.maxLength(8)])
+    firstname: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    lastname: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    phone: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(8)])
   });
 
   onSubmit() {
     this.service.create({
-      firstname: "fili",
-      lastname: "dimi",
-      password: "12345678",
-      phone: "1234565555"
+      firstname: this.RegisterOwnerForm.controls.firstname.value!,
+      lastname: this.RegisterOwnerForm.controls.lastname.value!,
+      password: this.RegisterOwnerForm.controls.password.value!,
+      phone: this.RegisterOwnerForm.controls.phone.value!
     })
       .subscribe({
         next: x => this.service.Login({
-          password: "12345678",
-          phone: "1234565555"
+          password: this.RegisterOwnerForm.controls.password.value!,
+          phone: this.RegisterOwnerForm.controls.phone.value!
         }).subscribe({
           next: x => {
             this.tokenService.setToken(x.toString());

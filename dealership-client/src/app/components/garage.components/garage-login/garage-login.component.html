@@ -1,1 +1,31 @@
-<p>garage-login works!</p>
+<div class="container col-md-6 mx-auto">
+
+    <form class="text-center" [formGroup]="LoginGarageForm" (ngSubmit)="onSubmit()">
+
+        <h2 class="mt-5">Login Form</h2>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Phone</mat-label>
+                <input formControlName="phone" matInput placeholder="Phone">
+                <mat-hint>Must be 10 numbers</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput placeholder="Password">
+                <mat-hint>Must be 8 characters</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <button [disabled]="!LoginGarageForm.valid" type="submit" mat-flat-button color="primary">Login</button>
+
+    </form>
+
+    <div class="text-center mt-3">
+        <button mat-flat-button routerLink="/garage-register" color="primary">Register</button>
+    </div>
+
+</div>
