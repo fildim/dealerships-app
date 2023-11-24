@@ -41,6 +41,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
 import { GarageRegisterComponent } from './components/garage.components/garage-register/garage-register.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -92,7 +93,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatDatepickerModule,
     MatTableModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSortModule
   ],
   providers: [
     OwnerService,

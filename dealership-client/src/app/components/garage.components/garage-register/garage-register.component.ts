@@ -20,27 +20,27 @@ export class GarageRegisterComponent {
 
   RegisterGarageForm = new FormGroup({
 
-    name: new FormControl([Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
-    address: new FormControl([Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
-    phone: new FormControl([Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
-    password: new FormControl([Validators.required, Validators.maxLength(8)])
+    name: new FormControl("", [Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
+    address: new FormControl("", [Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
+    phone: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+    password: new FormControl("", [Validators.required, Validators.maxLength(8)])
   });
 
   onSubmit() {
     this.service.create({
-      name: '',
-      address: '',
-      phone: '',
-      password: ''
+      name: this.RegisterGarageForm.controls.name.value!,
+      address: this.RegisterGarageForm.controls.address.value!,
+      phone: this.RegisterGarageForm.controls.phone.value!,
+      password: this.RegisterGarageForm.controls.password.value!
     })
       .subscribe({
         next: x => this.service.Login({
-          password: "12345678",
-          phone: "1234565555"
+          phone: this.RegisterGarageForm.controls.phone.value!,
+          password: this.RegisterGarageForm.controls.password.value!
         }).subscribe({
           next: x => {
             this.tokenService.setToken(x.toString());
-            this.router.navigateByUrl("owner-layout")
+            this.router.navigateByUrl("garage-layout")
           },
           error: x => console.log("login error")
         })

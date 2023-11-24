@@ -6,7 +6,8 @@ import { TokenService } from 'src/app/services/token.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { OwnerAppointmentDetailsComponent } from '../owner-appointment-details/owner-appointment-details.component';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-owner.get-all-appointments',
@@ -25,7 +26,8 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
   displayedColumns: string[] = [
     'vehicle',
     'garage',
-    'dateOfArrival'
+    'dateOfArrival',
+    'details'
   ];
 
 
@@ -33,6 +35,7 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
     private service: OwnerService,
     private tokenService: TokenService,
     private matDialog: MatDialog,
+    private _liveAnnouncer: LiveAnnouncer
   ) { }
 
 
@@ -55,6 +58,21 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
           { appointment: this.listOfAppointments.find(x => x.id == 1005) }
       }
     )
+  }
+
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+
+  announceSortChange(sortState: Sort) {
+
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
 

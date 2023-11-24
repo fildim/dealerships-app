@@ -1,6 +1,7 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReadVehicleModel } from 'src/app/models/vehicle/read.vehicle.model';
 import { OwnerService } from 'src/app/services/owner.service';
@@ -32,6 +33,8 @@ export class OwnerGetAllBindedVehiclesComponent implements OnInit {
     private service: OwnerService,
     private tokenService: TokenService,
     private matDialog: MatDialog,
+
+    private _liveAnnouncer: LiveAnnouncer
   ) { }
 
 
@@ -44,6 +47,20 @@ export class OwnerGetAllBindedVehiclesComponent implements OnInit {
         this.dataSource.sort = this.sort;
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+
+  announceSortChange(sortState: Sort) {
+
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
 

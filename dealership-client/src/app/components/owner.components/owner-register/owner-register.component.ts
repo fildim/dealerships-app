@@ -34,8 +34,9 @@ export class OwnerRegisterComponent {
     })
       .subscribe({
         next: x => this.service.Login({
+          phone: this.RegisterOwnerForm.controls.phone.value!,
           password: this.RegisterOwnerForm.controls.password.value!,
-          phone: this.RegisterOwnerForm.controls.phone.value!
+
         }).subscribe({
           next: x => {
             this.tokenService.setToken(x.toString());

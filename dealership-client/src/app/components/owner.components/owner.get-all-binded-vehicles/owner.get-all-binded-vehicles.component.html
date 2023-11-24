@@ -13,27 +13,37 @@
         <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="vin">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Vin</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by vin">
+                    Vin
+                </th>
                 <td mat-cell *matCellDef="let vehicle">{{ vehicle.vin }}</td>
             </ng-container>
 
             <ng-container matColumnDef="model">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by model">
+                    Model
+                </th>
                 <td mat-cell *matCellDef="let vehicle">{{ vehicle.model }}</td>
             </ng-container>
 
             <ng-container matColumnDef="dateOfManufacture">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Of Manufacture</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateOfManufacture">
+                    Date Of Manufacture
+                </th>
                 <td mat-cell *matCellDef="let vehicle">{{ vehicle.dateOfManufacture }}</td>
             </ng-container>
 
             <ng-container matColumnDef="mileage">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mileage</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by mileage">
+                    Mileage
+                </th>
                 <td mat-cell *matCellDef="let vehicle">{{ vehicle.mileage }}</td>
             </ng-container>
 
             <ng-container matColumnDef="crashed">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Crashed</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by crashed">
+                    Crashed
+                </th>
                 <td mat-cell *matCellDef="let vehicle">{{ vehicle.crashed }}</td>
             </ng-container>
 

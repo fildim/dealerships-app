@@ -159,7 +159,7 @@ namespace DEALERSHIPS_APP.Services
                 claims: new List<Claim>
                 {
                     new Claim("userId", garage!.Id.ToString()),
-                    new Claim("garageName", garage.Name.ToString()),
+                    new Claim("garageName", garage.Name),
                 },
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
