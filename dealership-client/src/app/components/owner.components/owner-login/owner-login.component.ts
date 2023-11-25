@@ -20,7 +20,7 @@ export class OwnerLoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.tokenService.isLoggedIn()) {
+    if (this.tokenService.isLoggedIn() && this.tokenService.getUserType() == "owner") {
       this.router.navigateByUrl("owner-layout")
     }
   }

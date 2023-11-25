@@ -22,7 +22,7 @@ export class GarageLoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.tokenService.getId()) {
+    if (this.tokenService.isLoggedIn() && this.tokenService.getUserType() == "garage") {
       this.router.navigateByUrl("garage-layout")
     }
   }

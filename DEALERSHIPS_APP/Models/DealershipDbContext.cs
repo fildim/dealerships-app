@@ -5,12 +5,12 @@ namespace DEALERSHIPS_APP.Models;
 
 public partial class DealershipDbContext : DbContext
 {
-    
+
 
     public DealershipDbContext(DbContextOptions<DealershipDbContext> options)
         : base(options)
     {
-        
+
 
 
     }
@@ -175,6 +175,9 @@ public partial class DealershipDbContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
                 .HasColumnName("PHONE");
+            entity.Property(e => e.UserType)
+                .HasColumnName("USER_TYPE")
+                .HasMaxLength(20);
         });
 
         modelBuilder.Entity<Owner>(entity =>

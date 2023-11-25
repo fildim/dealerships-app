@@ -62,7 +62,8 @@ namespace DEALERSHIPS_APP.Services
                 {
                     Phone = garage.Phone,
                     Password = encryptedPassword,
-                    Created = now
+                    Created = now,
+                    UserType = "garage"
                 };
 
                 await _loginCredentialRepository.Create(loginCredentials);
@@ -160,7 +161,8 @@ namespace DEALERSHIPS_APP.Services
                 {
                     new Claim("userId", garage!.Id.ToString()),
                     new Claim("garageName", garage.Name),
-                },
+					new Claim("userType", "garage")
+				},
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );

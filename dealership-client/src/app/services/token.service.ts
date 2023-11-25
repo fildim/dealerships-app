@@ -30,6 +30,11 @@ export class TokenService {
         return var1['userLastname'];
     }
 
+    getUserType() {
+      let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+      return var1['userType'];
+  }
+
     removeToken() {
         localStorage.removeItem("jwt");
     }

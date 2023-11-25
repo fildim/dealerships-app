@@ -12,4 +12,6 @@ public partial class Logincredential
     public string Password { get; set; } = null!;
 
     public DateTime Created { get; set; }
+
+    public string UserType { get; set; } = null!;
 }
