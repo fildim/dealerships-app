@@ -11,6 +11,10 @@ export class TokenService {
         localStorage.setItem("jwt", token);
     }
 
+    isLoggedIn(){
+      return localStorage.getItem("jwt");
+    }
+
     getId() {
         let var1 = this.jwtHelper.decodeToken(tokenGetter()!)!;
         return parseInt(var1['userId']);

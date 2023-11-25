@@ -12,10 +12,10 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './owner.get-all-binded-vehicles.component.html',
   styleUrls: ['./owner.get-all-binded-vehicles.component.css']
 })
-export class OwnerGetAllBindedVehiclesComponent implements OnInit {
+export class OwnerGetAllBindedVehiclesComponent  {
 
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   listOfVehicles: ReadVehicleModel[] = [];
 
@@ -35,10 +35,7 @@ export class OwnerGetAllBindedVehiclesComponent implements OnInit {
     private matDialog: MatDialog,
 
     private _liveAnnouncer: LiveAnnouncer
-  ) { }
-
-
-  ngOnInit(): void {
+  ) {
     this.service.getBindedVehicles(this.tokenService.getId()).subscribe({
       next: bindedVehicles => {
         this.listOfVehicles = bindedVehicles;
@@ -49,9 +46,21 @@ export class OwnerGetAllBindedVehiclesComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+
+  // ngOnInit(): void {
+  //   this.service.getBindedVehicles(this.tokenService.getId()).subscribe({
+  //     next: bindedVehicles => {
+  //       this.listOfVehicles = bindedVehicles;
+
+  //       this.dataSource = new MatTableDataSource<ReadVehicleModel>(this.listOfVehicles);
+  //       this.dataSource.sort = this.sort;
+  //     }
+  //   });
+  // }
+
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
 
   announceSortChange(sortState: Sort) {

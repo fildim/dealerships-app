@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DEALERSHIPS_APP.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Route("api/[controller]")]
 	[Authorize]
 	public class OwnerController : ControllerBase
@@ -85,12 +85,12 @@ namespace DEALERSHIPS_APP.Controllers
             return _mapper.Map<ReadOnlyAppointmentDTO>(appointment);
         }
 
+        [HttpGet("[action]")]
+        public async Task<List<ReadOnlyVehicleDTO>> GetUnbindedVehicles()
+        {
+            var unbindedVehicles = await _service.GetUnbindedVehicles();
 
-
-
-
-
-
-
-    }
+			return _mapper.Map<List<ReadOnlyVehicleDTO>>(unbindedVehicles);
+		}
+	}
 }

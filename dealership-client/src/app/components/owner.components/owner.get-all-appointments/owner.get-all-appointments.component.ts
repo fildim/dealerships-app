@@ -14,10 +14,10 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
   templateUrl: './owner.get-all-appointments.component.html',
   styleUrls: ['./owner.get-all-appointments.component.css']
 })
-export class OwnerGetAllAppointmentsComponent implements OnInit {
+export class OwnerGetAllAppointmentsComponent {
 
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   listOfAppointments: ReadAppointmentModel[] = [];
 
@@ -36,18 +36,25 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
     private tokenService: TokenService,
     private matDialog: MatDialog,
     private _liveAnnouncer: LiveAnnouncer
-  ) { }
-
-
-
-  ngOnInit(): void {
+  ) {
     this.service.getAppointments(this.tokenService.getId()).subscribe((listOfAppointments) => {
       this.listOfAppointments = listOfAppointments;
 
       this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
       this.dataSource.sort = this.sort;
     });
-  }
+   }
+
+
+
+  // ngOnInit(): void {
+  //   this.service.getAppointments(this.tokenService.getId()).subscribe((listOfAppointments) => {
+  //     this.listOfAppointments = listOfAppointments;
+
+  //     this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
+  //     this.dataSource.sort = this.sort;
+  //   });
+  // }
 
   getById(id: number) {
 
@@ -61,9 +68,9 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
   }
 
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
 
   announceSortChange(sortState: Sort) {

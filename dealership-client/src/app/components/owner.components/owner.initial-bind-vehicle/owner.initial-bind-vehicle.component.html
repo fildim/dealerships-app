@@ -1,1 +1,38 @@
-<p>owner.initial-bind-vehicle works!</p>
+<mat-card>
+
+  <mat-card-header>
+
+      <mat-card-title-group>
+          <mat-card-title>Unbinded Vehicles</mat-card-title>
+      </mat-card-title-group>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+      <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="vin">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by vin">
+                  Vin
+              </th>
+              <td mat-cell *matCellDef="let vehicle">{{ vehicle.vin }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="bind">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let vehicle">
+                <button mat-flat-button (click)="bind(vehicle.id)" color="primary">
+                    Bind
+                </button>
+            </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+
+  </mat-card-content>
+
+</mat-card>

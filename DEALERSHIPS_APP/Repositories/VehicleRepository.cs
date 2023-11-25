@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DEALERSHIPS_APP.Repositories
 {
-    public interface IVehicleRepository
+	public interface IVehicleRepository
     {
-        
+
         Task<Vehicle?> GetById(int id);
-    }
+		Task<List<Vehicle>> GetAll();
+	}
 
     public class VehicleRepository : IVehicleRepository
     {
@@ -24,5 +25,10 @@ namespace DEALERSHIPS_APP.Repositories
         {
             return await _dbContext.Vehicles.SingleOrDefaultAsync(x => x.Id == id);
         }
-    }
+
+		public async Task<List<Vehicle>> GetAll()
+		{
+			return await _dbContext.Vehicles.ToListAsync();
+		}
+	}
 }

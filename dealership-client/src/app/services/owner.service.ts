@@ -10,32 +10,38 @@ import { ReadVehicleModel } from '../models/vehicle/read.vehicle.model';
 @Injectable()
 export class OwnerService {
 
-    constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-    public getById(id: number) {
-        return this.httpClient.get<ReadOwnerModel>(`${enviroment.applicationUrl}/api/owner/${id}`);
-    }
+  public getById(id: number) {
+    return this.httpClient.get<ReadOwnerModel>(`${enviroment.applicationUrl}/api/owner/${id}`);
+  }
 
-    public create(owner: CreateOwnerModel) {
-        return this.httpClient.post(`${enviroment.applicationUrl}/api/owner`, owner);
-    }
+  public create(owner: CreateOwnerModel) {
+    return this.httpClient.post(`${enviroment.applicationUrl}/api/owner`, owner);
+  }
 
-    public getBindedVehicles(id: number) {
-        return this.httpClient.get<ReadVehicleModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetBindedVehicles`);
-    }
-    
-    public getAppointments(id: number) {
-        return this.httpClient.get<ReadAppointmentModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointments`);
-    }
+  public getBindedVehicles(id: number) {
+    return this.httpClient.get<ReadVehicleModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetBindedVehicles`);
+  }
 
-    public getAppointmentById(id: number, appointmentId: number) {
-        return this.httpClient.get<ReadAppointmentModel>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
-    }
+  public getAppointments(id: number) {
+    return this.httpClient.get<ReadAppointmentModel[]>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointments`);
+  }
 
-    public Login(loginCredentials: LoginOwnerModel) {
-        return this.httpClient.post(`${enviroment.applicationUrl}/api/owner/login`, loginCredentials);
-    }
+  public getAppointmentById(id: number, appointmentId: number) {
+    return this.httpClient.get<ReadAppointmentModel>(`${enviroment.applicationUrl}/api/owner/${id}/GetAppointmentById/${appointmentId}`);
+  }
 
+  public Login(loginCredentials: LoginOwnerModel) {
+    return this.httpClient.post(`${enviroment.applicationUrl}/api/owner/login`, loginCredentials);
+  }
 
+  public getUnbindedVehicles() {
+    return this.httpClient.get<ReadVehicleModel[]>(`${enviroment.applicationUrl}/api/owner/GetUnbindedVehicles`);
+  }
+
+  public initialBindVehicle(id: number, vehicleId: number){
+    return this.httpClient.post(`${enviroment.applicationUrl}/api/owner/${id}/initialBindVehicle/${vehicleId}`, {});
+  }
 }
 

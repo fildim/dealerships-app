@@ -10,14 +10,15 @@ using System.Text;
 
 namespace DEALERSHIPS_APP.Services
 {
-    public interface IOwnerService
+	public interface IOwnerService
     {
         Task Create(Owner owner, string password);
         Task<List<Appointment>> GetAllAppointmentsById(int ownerId);
         Task<Appointment> GetAppointmentByAppointmentId(int ownerId, int appointmentId);
         Task<List<Vehicle>> GetBindedVehicles(int ownerId);
         Task<Owner> GetById(int id);
-        Task InitialBindVehicle(int ownerId, int vehicleId);
+		Task<List<Vehicle>> GetUnbindedVehicles();
+		Task InitialBindVehicle(int ownerId, int vehicleId);
         Task<string> Login(string phone, string password);
     }
 
@@ -168,7 +169,7 @@ namespace DEALERSHIPS_APP.Services
                 await _dbTransactionService.Rollback();
                 throw;
             }
-        }       
+        }
 
 
         public async Task<List<Vehicle>> GetBindedVehicles(int ownerId)
@@ -214,7 +215,7 @@ namespace DEALERSHIPS_APP.Services
             }
 
             var encryptedPassword = BCrypt.Net.BCrypt.Verify(password, loginCheck.Password);
-            
+
             if (encryptedPassword == false)
             {
                 throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
@@ -240,8 +241,15 @@ namespace DEALERSHIPS_APP.Services
 
             return JsonConvert.SerializeObject(new JwtSecurityTokenHandler().WriteToken(tokenOptions));
         }
-        
 
+        public async Task<List<Vehicle>> GetUnbindedVehicles()
+        {
+            var bindedVehicleIds = await _ownershipRepository.GetAllVehicleIds();
+
+            var vehicles = await _vehicleRepository.GetAll();
+
+            return vehicles.Where(x => !bindedVehicleIds.Contains(x.Id)).ToList();
+        }
 
 
 
