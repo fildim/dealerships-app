@@ -171,6 +171,11 @@ namespace DEALERSHIPS_APP.Services
         }
 
 
+        public async Task<Appointment> UpdateAppointment(Appointment appointment)
+        {
+            await _appointmentRepository.Update(appointment);
+        }
+
 
     }
 }

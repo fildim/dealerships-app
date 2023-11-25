@@ -23,7 +23,8 @@ export class OwnerApplicationLayoutComponent {
 
 
   constructor(
-    private breakpointObserver: BreakpointObserver, private router: Router,
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
     private tokenService: TokenService
   ) { }
 

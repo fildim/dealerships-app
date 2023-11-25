@@ -28,7 +28,7 @@ export class GarageApplicationLayoutComponent {
     private tokenService: TokenService
   ) { }
 
-  garageName: string = this.tokenService.getFirstname();
+  garageName: string = this.tokenService.getGarageName();
 
 
 

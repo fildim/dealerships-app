@@ -20,10 +20,10 @@ export class GarageRegisterComponent {
 
   RegisterGarageForm = new FormGroup({
 
-    name: new FormControl("", [Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
-    address: new FormControl("", [Validators.required, Validators.minLength(50), Validators.maxLength(50)]),
+    name: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    address: new FormControl("", [Validators.required, Validators.maxLength(50)]),
     phone: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
-    password: new FormControl("", [Validators.required, Validators.maxLength(8)])
+    password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(8)])
   });
 
   onSubmit() {

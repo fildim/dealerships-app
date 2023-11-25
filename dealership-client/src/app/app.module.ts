@@ -42,6 +42,7 @@ import { MatTableModule } from '@angular/material/table';
 import { GarageRegisterComponent } from './components/garage.components/garage-register/garage-register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
+import { GarageUpdateVehicleComponent } from './garage.update-vehicle/garage.update-vehicle.component';
 
 
 
@@ -62,6 +63,7 @@ import { MatSortModule } from '@angular/material/sort';
     OwnerRegisterComponent,
     OwnerAppointmentDetailsComponent,
     GarageRegisterComponent,
+    GarageUpdateVehicleComponent,
 
   ],
   imports: [

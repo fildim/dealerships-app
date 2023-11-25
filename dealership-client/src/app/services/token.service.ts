@@ -11,8 +11,8 @@ export class TokenService {
         localStorage.setItem("jwt", token);
     }
 
-    isLoggedIn(){
-      return localStorage.getItem("jwt");
+    isLoggedIn() {
+        return localStorage.getItem("jwt");
     }
 
     getId() {
@@ -30,10 +30,15 @@ export class TokenService {
         return var1['userLastname'];
     }
 
+    getGarageName() {
+        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+        return var1['garageName'];
+    }
+
     getUserType() {
-      let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
-      return var1['userType'];
-  }
+        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+        return var1['userType'];
+    }
 
     removeToken() {
         localStorage.removeItem("jwt");
