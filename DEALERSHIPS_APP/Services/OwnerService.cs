@@ -215,6 +215,11 @@ namespace DEALERSHIPS_APP.Services
                 throw new AuthenticationException($"Login credentials for phone = '{phone}' not found");
             }
 
+            if (loginCheck.UserType != "owner")
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
+            }
+
             var encryptedPassword = BCrypt.Net.BCrypt.Verify(password, loginCheck.Password);
 
             if (encryptedPassword == false)

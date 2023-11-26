@@ -1,13 +1,11 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
 import { OwnerService } from 'src/app/services/owner.service';
 import { TokenService } from 'src/app/services/token.service';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { OwnerAppointmentDetailsComponent } from '../owner-appointment-details/owner-appointment-details.component';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner.get-all-appointments',
@@ -34,8 +32,7 @@ export class OwnerGetAllAppointmentsComponent {
   constructor(
     private service: OwnerService,
     private tokenService: TokenService,
-    private matDialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer
+    private router: Router
   ) {
     this.service.getAppointments(this.tokenService.getId()).subscribe((listOfAppointments) => {
       this.listOfAppointments = listOfAppointments;
@@ -43,44 +40,15 @@ export class OwnerGetAllAppointmentsComponent {
       this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
       this.dataSource.sort = this.sort;
     });
-   }
-
-
-
-  // ngOnInit(): void {
-  //   this.service.getAppointments(this.tokenService.getId()).subscribe((listOfAppointments) => {
-  //     this.listOfAppointments = listOfAppointments;
-
-  //     this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
-  //     this.dataSource.sort = this.sort;
-  //   });
-  // }
-
-  getById(id: number) {
-
-    this.matDialog.open(
-      OwnerAppointmentDetailsComponent,
-      {
-        data:
-          { appointment: this.listOfAppointments.find(x => x.id == 1005) }
-      }
-    )
   }
 
 
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
+  sendId(id: number) {
 
-
-  announceSortChange(sortState: Sort) {
-
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+    this.router.navigateByUrl("/owner-appointment-details", { state: { id: id } });
   }
+
+
 
 
 }

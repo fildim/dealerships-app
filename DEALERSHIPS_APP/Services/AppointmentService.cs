@@ -8,7 +8,6 @@ namespace DEALERSHIPS_APP.Services
     {
         Task Create(Appointment appointment);
         Task<Appointment> GetById(int id);
-        Task SetDiagnosis(int appointmentId, string diagnosis);
     }
 
 
@@ -50,20 +49,7 @@ namespace DEALERSHIPS_APP.Services
         }
 
 
-        public async Task SetDiagnosis(int appointmentId, string diagnosis)
-        {
-            var appointment = await _appointmentRepository.GetById(appointmentId);
-
-            if (appointment == null)
-            {
-                throw new EntityNotFoundException($"Appointment with id = '{appointmentId}' not found");
-            }
-
-            appointment.Diagnosis = diagnosis;
-            appointment.Updated = DateTime.Now;
-
-            await _appointmentRepository.Update(appointment);
-        }
+        
     }
 
 }

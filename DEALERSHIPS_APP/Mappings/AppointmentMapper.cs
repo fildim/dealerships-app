@@ -10,7 +10,7 @@ namespace DEALERSHIPS_APP.Mappings
         public AppointmentMapper()
         {
             CreateMap<CreateAppointmentDTO, Appointment>();
-            CreateMap<Appointment, ReadOnlyAppointmentDTO>();
+            CreateMap<Appointment, ReadOnlyAppointmentDTO>().ReverseMap();
             
         }
 

@@ -1,8 +1,11 @@
+
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
-import { Component, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { TokenService } from 'src/app/services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner-appointment-details',
@@ -11,9 +14,10 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class OwnerAppointmentDetailsComponent {
 
-  @ViewChild(MatSort) sort!: MatSort;
 
-  appointmentTable!: ReadAppointmentModel;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+
+  appointmentDetails!: ReadAppointmentModel;
 
   dataSource!: MatTableDataSource<ReadAppointmentModel>;
 
@@ -29,13 +33,20 @@ export class OwnerAppointmentDetailsComponent {
 
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public appointment: ReadAppointmentModel,
-    private matDialog: MatDialog,
-  ) { }
+    private service: AppointmentService,
+    private tokenService: TokenService,
+    private router: Router,
+  ) {
 
+    var appointmentId: number = parseInt(router.getCurrentNavigation()!.extras.state!['id']);
 
+    this.service.getById(appointmentId).subscribe({
+      next: x => this.appointmentDetails = x
+    });
 
-
+    // this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.appointmentDetails);
+    // this.dataSource.sort = this.sort;
+  }
 
 
 }

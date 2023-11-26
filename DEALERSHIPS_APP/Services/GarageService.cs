@@ -18,6 +18,7 @@ namespace DEALERSHIPS_APP.Services
         Task<Garage> GetById(int id);
         Task<List<Garage>> GetAll();
         Task<string> Login(string phone, string password);
+        Task UpdateAppointment(Appointment appointment);
     }
 
 
@@ -142,6 +143,11 @@ namespace DEALERSHIPS_APP.Services
                 throw new AuthenticationException($"Login credentials for phone = '{phone}' not found");
             }
 
+            if (loginCheck.UserType != "garage")
+            {
+                throw new AuthenticationException($"Login credentials for phone = '{phone}' not verified");
+            }
+
             var encryptedPassword = BCrypt.Net.BCrypt.Verify(password, loginCheck.Password);
 
             if (encryptedPassword == false)
@@ -171,10 +177,24 @@ namespace DEALERSHIPS_APP.Services
         }
 
 
-        public async Task<Appointment> UpdateAppointment(Appointment appointment)
+        public async Task UpdateAppointment(Appointment appointment)
         {
-            await _appointmentRepository.Update(appointment);
+            var existingAppointment = await _appointmentRepository.GetById(appointment.Id);
+
+            if (existingAppointment == null)
+            {
+                throw new EntityNotFoundException($"Appointment with id = '{appointment.Id}' not found");
+            }
+
+            existingAppointment.DateOfPickup = appointment.DateOfPickup;
+            existingAppointment.Diagnosis = appointment.Diagnosis;
+            existingAppointment.Mileage = appointment.Mileage;
+            existingAppointment.Vehicle.Crashed = appointment.Vehicle.Crashed;
+            existingAppointment.Updated = DateTime.Now;
+
+            await _appointmentRepository.Update(existingAppointment);
         }
+
 
 
     }

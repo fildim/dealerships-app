@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OwnerService } from 'src/app/services/owner.service';
 import { TokenService } from 'src/app/services/token.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class OwnerLoginComponent implements OnInit {
     private router: Router,
     private service: OwnerService,
     private tokenService: TokenService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -40,9 +42,10 @@ export class OwnerLoginComponent implements OnInit {
     }).subscribe({
       next: x => {
         this.tokenService.setToken(x.toString());
-        this.router.navigateByUrl("owner-layout")
+        this.router.navigateByUrl("owner-layout");
+        this.notificationService.show("Login succesful");
       },
-      error: x => console.log("login error")
+      error: x => this.notificationService.show(x.error)
     });
 
   }

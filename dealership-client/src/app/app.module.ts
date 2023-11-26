@@ -43,6 +43,8 @@ import { GarageRegisterComponent } from './components/garage.components/garage-r
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { GarageUpdateVehicleComponent } from './garage.update-vehicle/garage.update-vehicle.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificationService } from './services/notification.service';
 
 
 
@@ -96,13 +98,15 @@ import { GarageUpdateVehicleComponent } from './garage.update-vehicle/garage.upd
     MatDatepickerModule,
     MatTableModule,
     MatNativeDateModule,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule
   ],
   providers: [
     OwnerService,
     GarageService,
     AppointmentService,
-    TokenService
+    TokenService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })

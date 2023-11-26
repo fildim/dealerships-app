@@ -13,6 +13,7 @@ import { GarageRegisterComponent } from "./components/garage.components/garage-r
 import { GarageApplicationLayoutComponent } from "./components/garage.components/garage.application-layout/garage.application-layout.component";
 import { GarageUpdateAppointmentComponent } from "./components/garage.components/garage.update-appointment/garage.update-appointment.component";
 import { GarageUpdateVehicleComponent } from "./garage.update-vehicle/garage.update-vehicle.component";
+import { OwnerAppointmentDetailsComponent } from "./components/owner.components/owner-appointment-details/owner-appointment-details.component";
 
 export const routes: Routes = [
     { path: '', component: WelcomePageComponent },
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: "owner-all-appointments", component: OwnerGetAllAppointmentsComponent },
     { path: "owner-all-binded-vehicles", component: OwnerGetAllBindedVehiclesComponent },
     { path: "owner-bind-vehicle", component: OwnerInitialBindVehicleComponent },
+    { path: "owner-appointment-details", component: OwnerAppointmentDetailsComponent },
     { path: "garage-all-appointments", component: GarageGetAllAppointmentsComponent },
     { path: "garage-register", component: GarageRegisterComponent },
     { path: "garage-login", component: GarageLoginComponent },
