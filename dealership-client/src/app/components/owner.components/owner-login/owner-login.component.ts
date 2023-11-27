@@ -43,7 +43,7 @@ export class OwnerLoginComponent implements OnInit {
       next: x => {
         this.tokenService.setToken(x.toString());
         this.router.navigateByUrl("owner-layout");
-        this.notificationService.show("Login succesful");
+        this.notificationService.show("Login Successful");
       },
       error: x => this.notificationService.show(x.error)
     });

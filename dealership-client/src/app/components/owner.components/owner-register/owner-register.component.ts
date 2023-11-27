@@ -3,6 +3,7 @@ import { OwnerService } from './../../../services/owner.service';
 import { Component } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-owner-register',
@@ -14,7 +15,9 @@ export class OwnerRegisterComponent {
   constructor(
     private service: OwnerService,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+
+    private notificationService: NotificationService
   ) { }
 
   RegisterOwnerForm = new FormGroup({
@@ -33,17 +36,21 @@ export class OwnerRegisterComponent {
       phone: this.RegisterOwnerForm.controls.phone.value!
     })
       .subscribe({
-        next: x => this.service.Login({
-          phone: this.RegisterOwnerForm.controls.phone.value!,
-          password: this.RegisterOwnerForm.controls.password.value!,
-
-        }).subscribe({
-          next: x => {
-            this.tokenService.setToken(x.toString());
-            this.router.navigateByUrl("owner-layout")
-          },
-          error: x => console.log("login error")
-        })
+        next: x => {
+          this.service.Login({
+            phone: this.RegisterOwnerForm.controls.phone.value!,
+            password: this.RegisterOwnerForm.controls.password.value!,
+          }).subscribe({
+            next: x => {
+              this.tokenService.setToken(x.toString());
+              this.router.navigateByUrl("owner-layout");
+              this.notificationService.show("Login Successful")
+            },
+            error: x => this.notificationService.show("Login Unsuccessful")
+          });
+          this.notificationService.show("Register Successful")
+        },
+        error: x => this.notificationService.show("Register Unsuccessful")
       });
   }
 

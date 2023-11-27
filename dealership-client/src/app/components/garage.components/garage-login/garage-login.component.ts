@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +19,7 @@ export class GarageLoginComponent implements OnInit {
     private router: Router,
     private service: GarageService,
     private tokenService: TokenService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -42,9 +44,10 @@ export class GarageLoginComponent implements OnInit {
     }).subscribe({
       next: x => {
         this.tokenService.setToken(x.toString());
-        this.router.navigateByUrl("garage-layout")
+        this.router.navigateByUrl("garage-layout");
+        this.notificationService.show("Login Successful")
       },
-      error: x => console.log("login error")
+      error: x => this.notificationService.show(x.error)
     });
 
   }

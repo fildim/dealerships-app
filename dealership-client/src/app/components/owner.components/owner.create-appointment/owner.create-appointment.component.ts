@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ReadGarageModel } from 'src/app/models/garage/read.garage.model';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { GarageService } from 'src/app/services/garage.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { OwnerService } from 'src/app/services/owner.service';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -20,14 +21,14 @@ export class OwnerCreateAppointmentComponent implements OnInit {
 
   vehicleControl: ReadVehicleModel[] = [];
   garageControl: ReadGarageModel[] = [];
-  selectedValue: string = 'test';
 
   constructor(
     private appointmentService: AppointmentService,
     private ownerService: OwnerService,
     private garageService: GarageService,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private notificationService: NotificationService
   ) {
 
     this.minDate = new Date();
@@ -38,13 +39,23 @@ export class OwnerCreateAppointmentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.ownerService.getBindedVehicles(this.tokenService.getId()).subscribe(
-      (listofVehicles: ReadVehicleModel[]) => this.vehicleControl = listofVehicles
-    );
+    this.ownerService.getBindedVehicles(this.tokenService.getId())
+      .subscribe({
+        next: (listofVehicles: ReadVehicleModel[]) => {
+          this.vehicleControl = listofVehicles;
+          // this.notificationService.show("Vehicle Bind Successful")
+        },
+        error: x => this.notificationService.show(x.error)
+      });
 
-    this.garageService.getAll().subscribe(
-      (listOfGarages: ReadGarageModel[]) => this.garageControl = listOfGarages
-    );
+    this.garageService.getAll()
+      .subscribe({
+        next: (listOfGarages: ReadGarageModel[]) => {
+          this.garageControl = listOfGarages;
+          // this.notificationService.show("All Garages Fetching Successful")
+        },
+        error: x => this.notificationService.show(x.error)
+      });
 
   }
 
@@ -64,9 +75,14 @@ export class OwnerCreateAppointmentComponent implements OnInit {
       vehicleId: parseInt(this.createAppointmentForm.controls.vehicleId.value!),
       garageId: parseInt(this.createAppointmentForm.controls.garageId.value!),
       dateOfArrival: new Date(this.createAppointmentForm.controls.dateOfArrival.value!)
-    }).subscribe({
-      next: x => this.router.navigateByUrl('/owner-all-appointments')
-    });
+    })
+      .subscribe({
+        next: x => {
+          this.router.navigateByUrl('/owner-all-appointments');
+          this.notificationService.show("Appointment Created Successfully")
+        },
+        error: x => this.notificationService.show(x.error)
+      });
   }
 
 }

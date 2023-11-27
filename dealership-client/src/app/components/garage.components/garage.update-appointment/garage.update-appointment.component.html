@@ -1,1 +1,76 @@
-<p>garage.update-appointment works!</p>
+<mat-card>
+
+    <mat-card-header>
+        <mat-card-title>Update Appointment Form</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <mat-card>
+
+            <mat-card-header>
+                <mat-card-title>Vehicle Details</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <p>Vin : {{ appointmentDetails.vehicle.vin }}</p>
+                <p>Model : {{ appointmentDetails.vehicle.model }}</p>
+                <p>Date of Manufacture : {{ appointmentDetails.vehicle.dateOfManufacture }}</p>
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-divider></mat-divider>
+
+        <mat-list>
+
+            <mat-list-item>
+                <span matListItemTitle>Date of Arrival</span>
+                <span matListItemLine>{{ appointmentDetails.dateOfArrival }}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+                <span matListItemTitle>Previous Mileage</span>
+                <span matListItemLine>{{ appointmentDetails.mileage }}</span>
+            </mat-list-item>
+
+            <form [formGroup]="updateAppointmentForm" (ngSubmit)="onSubmit()">
+
+                <p>
+                    <mat-form-field>
+                        <mat-label>New Mileage</mat-label>
+                        <input matInput type="number" formControlName="mileage">
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field>
+                        <mat-label>Diagnosis</mat-label>
+                        <input matInput formControlName="diagnosis">
+                    </mat-form-field>
+                </p>
+
+                <!-- <p>
+                    <mat-checkbox value=false formControlName="crashed">Crashed</mat-checkbox>
+                </p> -->
+
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input formControlName="dateOfPickup" matInput [min]="minDate" [matDatepicker]="picker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <div class="mt-3">
+                    <button [disabled]="!updateAppointmentForm.valid" type="submit" mat-flat-button
+                        color="primary">Update</button>
+                </div>
+
+            </form>
+
+        </mat-list>
+
+    </mat-card-content>
+
+</mat-card>

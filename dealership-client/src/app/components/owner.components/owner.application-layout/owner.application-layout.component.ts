@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/services/notification.service';
 import { Component } from '@angular/core';
 
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -25,7 +26,8 @@ export class OwnerApplicationLayoutComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private notificationService: NotificationService
   ) { }
 
   ownerFirstname: string = this.tokenService.getFirstname();
@@ -35,5 +37,6 @@ export class OwnerApplicationLayoutComponent {
   logout() {
     this.tokenService.removeToken();
     this.router.navigateByUrl("/");
+    this.notificationService.show("Logout Successful")
   }
 }

@@ -1,9 +1,9 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSort, Sort } from '@angular/material/sort';
+
+import { Component, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReadVehicleModel } from 'src/app/models/vehicle/read.vehicle.model';
+import { NotificationService } from 'src/app/services/notification.service';
 import { OwnerService } from 'src/app/services/owner.service';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -12,7 +12,7 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './owner.get-all-binded-vehicles.component.html',
   styleUrls: ['./owner.get-all-binded-vehicles.component.css']
 })
-export class OwnerGetAllBindedVehiclesComponent  {
+export class OwnerGetAllBindedVehiclesComponent {
 
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -32,46 +32,21 @@ export class OwnerGetAllBindedVehiclesComponent  {
   constructor(
     private service: OwnerService,
     private tokenService: TokenService,
-    private matDialog: MatDialog,
-
-    private _liveAnnouncer: LiveAnnouncer
+    private notificationService: NotificationService
   ) {
-    this.service.getBindedVehicles(this.tokenService.getId()).subscribe({
-      next: bindedVehicles => {
-        this.listOfVehicles = bindedVehicles;
 
-        this.dataSource = new MatTableDataSource<ReadVehicleModel>(this.listOfVehicles);
-        this.dataSource.sort = this.sort;
-      }
-    });
+    this.service.getBindedVehicles(this.tokenService.getId())
+      .subscribe({
+        next: bindedVehicles => {
+          this.listOfVehicles = bindedVehicles;
+
+          this.dataSource = new MatTableDataSource<ReadVehicleModel>(this.listOfVehicles);
+          this.dataSource.sort = this.sort;
+
+          this.notificationService.show("All Owned Vehicles Fetching Successful")
+        },
+        error: x => this.notificationService.show(x.error)
+      });
   }
-
-
-  // ngOnInit(): void {
-  //   this.service.getBindedVehicles(this.tokenService.getId()).subscribe({
-  //     next: bindedVehicles => {
-  //       this.listOfVehicles = bindedVehicles;
-
-  //       this.dataSource = new MatTableDataSource<ReadVehicleModel>(this.listOfVehicles);
-  //       this.dataSource.sort = this.sort;
-  //     }
-  //   });
-  // }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
-
-
-  announceSortChange(sortState: Sort) {
-
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-
 
 }

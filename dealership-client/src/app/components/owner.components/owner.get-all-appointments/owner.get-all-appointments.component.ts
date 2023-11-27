@@ -6,6 +6,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-owner.get-all-appointments',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 export class OwnerGetAllAppointmentsComponent {
 
 
-  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatSort) sort!: MatSort;
 
   listOfAppointments: ReadAppointmentModel[] = [];
 
@@ -32,22 +33,30 @@ export class OwnerGetAllAppointmentsComponent {
   constructor(
     private service: OwnerService,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService,
   ) {
-    this.service.getAppointments(this.tokenService.getId()).subscribe((listOfAppointments) => {
-      this.listOfAppointments = listOfAppointments;
 
-      this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
-      this.dataSource.sort = this.sort;
-    });
+    this.service.getAppointments(this.tokenService.getId())
+      .subscribe({
+        next: (listOfAppointments) => {
+          this.listOfAppointments = listOfAppointments;
+
+          this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
+          this.dataSource.sort = this.sort;
+
+          this.notificationService.show("All Appointments Fetching Successful")
+        },
+        error: x => this.notificationService.show(x.error)
+      });
   }
+
 
 
   sendId(id: number) {
 
     this.router.navigateByUrl("/owner-appointment-details", { state: { id: id } });
   }
-
 
 
 

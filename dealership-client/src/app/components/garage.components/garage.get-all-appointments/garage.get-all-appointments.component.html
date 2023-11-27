@@ -1,1 +1,61 @@
-<p>garage.get-all-appointments works!</p>
+<mat-card>
+
+    <mat-card-header>
+
+        <mat-card-title-group>
+            <mat-card-title>All Appointments</mat-card-title>
+        </mat-card-title-group>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="vehicle">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by vehicle">
+                    Vehicle
+                </th>
+                <td mat-cell *matCellDef="let appointment">{{ appointment.vehicle.model }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by owner">
+                    Owner
+                </th>
+                <td mat-cell *matCellDef="let appointment">{{ appointment.owner.lastname }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateOfArrival">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateOfArrival">
+                    Date Of Arrival
+                </th>
+                <td mat-cell *matCellDef="let appointment">{{ appointment.dateOfArrival }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="details">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let appointment">
+                    <button mat-flat-button (click)="sendId(appointment.id)" color="primary">
+                        Details
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="update">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let appointment">
+                    <button mat-flat-button (click)="sendIdToUpdate(appointment.id)" color="primary">
+                        Update
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

@@ -12,7 +12,6 @@ import { GarageGetAllAppointmentsComponent } from "./components/garage.component
 import { GarageRegisterComponent } from "./components/garage.components/garage-register/garage-register.component";
 import { GarageApplicationLayoutComponent } from "./components/garage.components/garage.application-layout/garage.application-layout.component";
 import { GarageUpdateAppointmentComponent } from "./components/garage.components/garage.update-appointment/garage.update-appointment.component";
-import { GarageUpdateVehicleComponent } from "./garage.update-vehicle/garage.update-vehicle.component";
 import { OwnerAppointmentDetailsComponent } from "./components/owner.components/owner-appointment-details/owner-appointment-details.component";
 
 export const routes: Routes = [
@@ -30,7 +29,6 @@ export const routes: Routes = [
     { path: "garage-login", component: GarageLoginComponent },
     { path: "garage-layout", component: GarageApplicationLayoutComponent },
     { path: "garage-update-appointment", component: GarageUpdateAppointmentComponent },
-    { path: "garage-update-vehicle", component: GarageUpdateVehicleComponent },
 
 
 ]
