@@ -1,50 +1,59 @@
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { BehaviorSubject, Observable } from "rxjs";
+
 
 
 @Injectable()
 export class TokenService {
+  private subject = new BehaviorSubject<boolean>(false);
 
-    constructor(private jwtHelper: JwtHelperService) { }
+  constructor(private jwtHelper: JwtHelperService) { }
 
-    setToken(token: string) {
-        localStorage.setItem("jwt", token);
-    }
+  public isLoggenInObservable(): Observable<boolean> {
+    return this.subject.asObservable();
+  }
 
-    isLoggedIn() {
-        return localStorage.getItem("jwt");
-    }
+  setToken(token: string) {
+    this.subject.next(true);
+    localStorage.setItem("jwt", token);
+  }
 
-    getId() {
-        let var1 = this.jwtHelper.decodeToken(tokenGetter()!)!;
-        return parseInt(var1['userId']);
-    }
+  isLoggedIn() {
+    return localStorage.getItem("jwt") != null;
+  }
 
-    getFirstname() {
-        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
-        return var1['userFirstname'];
-    }
+  getId() {
+    let var1 = this.jwtHelper.decodeToken(tokenGetter()!)!;
+    return parseInt(var1['userId']);
+  }
 
-    getLastname() {
-        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
-        return var1['userLastname'];
-    }
+  getFirstname() {
+    let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+    return var1['userFirstname'];
+  }
 
-    getGarageName() {
-        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
-        return var1['garageName'];
-    }
+  getLastname() {
+    let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+    return var1['userLastname'];
+  }
 
-    getUserType() {
-        let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
-        return var1['userType'];
-    }
+  getGarageName() {
+    let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+    return var1['garageName'];
+  }
 
-    removeToken() {
-        localStorage.removeItem("jwt");
-    }
+  getUserType() {
+    let var1 = this.jwtHelper.decodeToken(tokenGetter()!);
+    return var1['userType'];
+  }
+
+  removeToken() {
+    this.subject.next(false);
+    localStorage.removeItem("jwt");
+  }
 }
 
 export function tokenGetter() {
-    return localStorage.getItem("jwt");
+  return localStorage.getItem("jwt");
 }

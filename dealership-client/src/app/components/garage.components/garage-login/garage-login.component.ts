@@ -25,7 +25,7 @@ export class GarageLoginComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.tokenService.isLoggedIn() && this.tokenService.getUserType() == "garage") {
-      this.router.navigateByUrl("garage-layout")
+      this.router.navigateByUrl("garage-all-appointments")
     }
   }
 
@@ -44,7 +44,7 @@ export class GarageLoginComponent implements OnInit {
     }).subscribe({
       next: x => {
         this.tokenService.setToken(x.toString());
-        this.router.navigateByUrl("garage-layout");
+        this.router.navigateByUrl("garage-all-appointments");
         this.notificationService.show("Login Successful")
       },
       error: x => this.notificationService.show(x.error)

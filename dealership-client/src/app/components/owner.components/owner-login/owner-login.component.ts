@@ -23,7 +23,7 @@ export class OwnerLoginComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.tokenService.isLoggedIn() && this.tokenService.getUserType() == "owner") {
-      this.router.navigateByUrl("owner-layout")
+      this.router.navigateByUrl("owner-all-appointments")
     }
   }
 
@@ -42,7 +42,7 @@ export class OwnerLoginComponent implements OnInit {
     }).subscribe({
       next: x => {
         this.tokenService.setToken(x.toString());
-        this.router.navigateByUrl("owner-layout");
+        this.router.navigateByUrl("owner-all-appointments");
         this.notificationService.show("Login Successful");
       },
       error: x => this.notificationService.show(x.error)

@@ -14,10 +14,8 @@ import { OwnerGetAllBindedVehiclesComponent } from './components/owner.component
 import { OwnerGetAllAppointmentsComponent } from './components/owner.components/owner.get-all-appointments/owner.get-all-appointments.component';
 import { OwnerInitialBindVehicleComponent } from './components/owner.components/owner.initial-bind-vehicle/owner.initial-bind-vehicle.component';
 import { OwnerCreateAppointmentComponent } from './components/owner.components/owner.create-appointment/owner.create-appointment.component';
-import { OwnerApplicationLayoutComponent } from './components/owner.components/owner.application-layout/owner.application-layout.component';
 import { GarageUpdateAppointmentComponent } from './components/garage.components/garage.update-appointment/garage.update-appointment.component';
 import { GarageGetAllAppointmentsComponent } from './components/garage.components/garage.get-all-appointments/garage.get-all-appointments.component';
-import { GarageApplicationLayoutComponent } from './components/garage.components/garage.application-layout/garage.application-layout.component';
 import { OwnerLoginComponent } from './components/owner.components/owner-login/owner-login.component';
 import { GarageLoginComponent } from './components/garage.components/garage-login/garage-login.component';
 import { RouterModule } from '@angular/router';
@@ -45,6 +43,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './services/notification.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { LayoutComponent } from './components/layout/layout.component';
 
 
 
@@ -55,17 +54,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     OwnerGetAllAppointmentsComponent,
     OwnerInitialBindVehicleComponent,
     OwnerCreateAppointmentComponent,
-    OwnerApplicationLayoutComponent,
     GarageUpdateAppointmentComponent,
     GarageGetAllAppointmentsComponent,
-    GarageApplicationLayoutComponent,
     GarageLoginComponent,
     OwnerLoginComponent,
     WelcomePageComponent,
     OwnerRegisterComponent,
     OwnerAppointmentDetailsComponent,
     GarageRegisterComponent,
-
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
