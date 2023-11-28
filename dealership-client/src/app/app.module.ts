@@ -44,6 +44,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './services/notification.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LayoutComponent } from './components/layout/layout.component';
+import { CanActivateGuard } from './guards/canActivate.guard';
+import { OwnerGuard } from './guards/owner.guard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 
@@ -62,7 +65,8 @@ import { LayoutComponent } from './components/layout/layout.component';
     OwnerRegisterComponent,
     OwnerAppointmentDetailsComponent,
     GarageRegisterComponent,
-    LayoutComponent
+    LayoutComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,9 @@ import { LayoutComponent } from './components/layout/layout.component';
     GarageService,
     AppointmentService,
     TokenService,
-    NotificationService
+    NotificationService,
+    CanActivateGuard,
+    OwnerGuard
   ],
   bootstrap: [AppComponent]
 })
