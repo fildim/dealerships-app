@@ -16,7 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class OwnerGetAllAppointmentsComponent {
 
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   listOfAppointments: ReadAppointmentModel[] = [];
 
@@ -55,7 +55,7 @@ export class OwnerGetAllAppointmentsComponent {
 
   sendId(id: number) {
 
-    this.router.navigateByUrl("/owner-appointment-details", { state: { id: id } });
+    this.router.navigateByUrl("/appointment-details", { state: { id: id } });
   }
 
 

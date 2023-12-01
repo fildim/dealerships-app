@@ -1,9 +1,7 @@
 import { NotificationService } from 'src/app/services/notification.service';
 
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
-import { Component, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
