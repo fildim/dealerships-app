@@ -49,7 +49,6 @@ export class GarageUpdateAppointmentComponent {
 
     mileage: new FormControl(0, [Validators.required]),
     diagnosis: new FormControl("", [Validators.required]),
-    // crashed: new FormControl(false, [Validators.required]),
     dateOfPickup: new FormControl("", [Validators.required])
   });
 
@@ -57,7 +56,7 @@ export class GarageUpdateAppointmentComponent {
 
     this.appointmentDetails.mileage = this.updateAppointmentForm.controls.mileage.value!;
     this.appointmentDetails.diagnosis = this.updateAppointmentForm.controls.diagnosis.value!
-    // if (this.updateAppointmentForm.controls.crashed == )
+    // if (this.updateAppointmentForm.controls.crashed == null) 
     this.appointmentDetails.dateOfPickup = new Date(this.updateAppointmentForm.controls.dateOfPickup.value!);
 
 

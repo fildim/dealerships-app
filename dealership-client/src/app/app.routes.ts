@@ -15,7 +15,7 @@ import { CanActivateGuard } from "./guards/canActivate.guard";
 import { OwnerGuard } from "./guards/owner.guard";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { GarageGuard } from "./guards/garage.guard";
-import { AppointmentDetailsComponent } from "./appointment-details/appointment-details.component";
+import { AppointmentDetailsComponent } from "./components/appointment-details/appointment-details.component";
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
