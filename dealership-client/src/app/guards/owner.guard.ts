@@ -5,7 +5,10 @@ import { TokenService } from '../services/token.service';
 
 @Injectable()
 export class OwnerGuard implements CanActivate {
-  constructor(private tokenService: TokenService, private router: Router) { }
+  constructor(
+    private tokenService: TokenService,
+    private router: Router
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,

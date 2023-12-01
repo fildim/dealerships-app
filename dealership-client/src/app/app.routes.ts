@@ -14,20 +14,21 @@ import { OwnerAppointmentDetailsComponent } from "./components/owner.components/
 import { CanActivateGuard } from "./guards/canActivate.guard";
 import { OwnerGuard } from "./guards/owner.guard";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
+import { GarageGuard } from "./guards/garage.guard";
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
   { path: "owner-login", component: OwnerLoginComponent },
   { path: "owner-register", component: OwnerRegisterComponent },
   { path: "owner-create-appointment", component: OwnerCreateAppointmentComponent, canActivate: [CanActivateGuard, OwnerGuard] },
-  { path: "owner-all-appointments", component: OwnerGetAllAppointmentsComponent },
-  { path: "owner-all-binded-vehicles", component: OwnerGetAllBindedVehiclesComponent },
-  { path: "owner-bind-vehicle", component: OwnerInitialBindVehicleComponent },
-  { path: "owner-appointment-details", component: OwnerAppointmentDetailsComponent },
-  { path: "garage-all-appointments", component: GarageGetAllAppointmentsComponent },
+  { path: "owner-all-appointments", component: OwnerGetAllAppointmentsComponent, canActivate: [CanActivateGuard, OwnerGuard] },
+  { path: "owner-all-binded-vehicles", component: OwnerGetAllBindedVehiclesComponent, canActivate: [CanActivateGuard, OwnerGuard] },
+  { path: "owner-bind-vehicle", component: OwnerInitialBindVehicleComponent, canActivate: [CanActivateGuard, OwnerGuard] },
+  { path: "owner-appointment-details", component: OwnerAppointmentDetailsComponent, canActivate: [CanActivateGuard, OwnerGuard] },
+  { path: "garage-all-appointments", component: GarageGetAllAppointmentsComponent, canActivate: [CanActivateGuard, GarageGuard] },
   { path: "garage-register", component: GarageRegisterComponent },
   { path: "garage-login", component: GarageLoginComponent },
-  { path: "garage-update-appointment", component: GarageUpdateAppointmentComponent },
+  { path: "garage-update-appointment", component: GarageUpdateAppointmentComponent, canActivate: [CanActivateGuard, GarageGuard] },
   { path: "not-found", component: NotFoundComponent },
 
 

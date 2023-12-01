@@ -32,6 +32,7 @@ export class OwnerAppointmentDetailsComponent {
       .subscribe({
         next: x => {
           this.appointmentDetails = x;
+          this.appointmentDetails.created = new Date(x.created.getDate() + x.created.getMonth() + x.created.getFullYear());
           this.notificationService.show("Appointment Details Fetching Successful")
         },
         error: x => {

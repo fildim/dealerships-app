@@ -1,64 +1,47 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <mat-sidenav #drawer
-               class="sidenav"
-               fixedInViewport="true"
-               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-               [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [opened]="!(isHandset$ | async)">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
 
     <mat-toolbar style="width: 16rem">Dealerships App
       <span class="spacer"></span>
-      <button mat-icon-button
-              (click)="drawer.close()"
-              *ngIf="isHandset$ | async">
+      <button mat-icon-button (click)="drawer.close()" *ngIf="isHandset$ | async">
         <mat-icon>close</mat-icon>
       </button>
     </mat-toolbar>
 
     <mat-nav-list *ngIf="isLoggedIn() && isOwner()">
-      <a mat-list-item
-         routerLink="/owner-create-appointment">New appointment</a>
-      <a mat-list-item
-         routerLink="/owner-all-appointments">All appointments</a>
-      <a mat-list-item
-         routerLink="/owner-all-binded-vehicles">Owned vehicles</a>
-      <a mat-list-item
-         routerLink="/owner-bind-vehicle">Bind vehicle</a>
+      <a mat-list-item routerLink="/owner-create-appointment">New appointment</a>
+      <a mat-list-item routerLink="/owner-all-appointments">All appointments</a>
+      <a mat-list-item routerLink="/owner-all-binded-vehicles">Owned vehicles</a>
+      <a mat-list-item routerLink="/owner-bind-vehicle">Bind vehicle</a>
     </mat-nav-list>
 
     <mat-nav-list *ngIf="isLoggedIn() && isGarage()">
-      <a mat-list-item
-         routerLink="/garage-all-appointments">All Appointments</a>
+      <a mat-list-item routerLink="/garage-all-appointments">All Appointments</a>
     </mat-nav-list>
 
   </mat-sidenav>
 
   <mat-sidenav-content style="display: flex; flex-direction: column; gap: 1rem">
-    <mat-toolbar *ngIf="isLoggedIn() && isOwner()"
-                 color="primary">
+    <mat-toolbar *ngIf="isLoggedIn() && isOwner()" color="primary">
       <span>{{ ownerFirstname }} {{ ownerLastname }}</span>
       <span class="flex-grow"></span>
-      <button mat-flat-button
-              color="warn"
-              (click)="logout()">Logout</button>
+      <button mat-flat-button color="warn" (click)="logout()">Logout</button>
     </mat-toolbar>
 
-    <mat-toolbar *ngIf="isLoggedIn() && isGarage()"
-                 color="primary">
+    <mat-toolbar *ngIf="isLoggedIn() && isGarage()" color="primary">
       <span>{{ garageName }}</span>
       <span class="flex-grow"></span>
-      <button mat-flat-button
-              color="warn"
-              (click)="logout()">Logout</button>
+      <button mat-flat-button color="warn" (click)="logout()">Logout</button>
     </mat-toolbar>
 
     <router-outlet></router-outlet>
 
     <footer class="footer">
-      <span>&copy; 2023 Coding Factory
-        <a target="_blank"
-           href="https://github.com/fildim/dealerships-app">
+      <span>&copy; 2023 Filippos Dimitriadis
+        <a target="_blank" href="https://github.com/fildim/dealerships-app">
           Github Repo</a>
       </span>
     </footer>

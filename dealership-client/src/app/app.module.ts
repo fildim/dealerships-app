@@ -47,6 +47,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { CanActivateGuard } from './guards/canActivate.guard';
 import { OwnerGuard } from './guards/owner.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AppointmentDetailsComponent } from './appointment-details/appointment-details.component';
 
 
 
@@ -66,7 +67,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     OwnerAppointmentDetailsComponent,
     GarageRegisterComponent,
     LayoutComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AppointmentDetailsComponent
   ],
   imports: [
     BrowserModule,
