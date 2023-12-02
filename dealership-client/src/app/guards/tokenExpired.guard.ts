@@ -7,7 +7,7 @@ import { TokenService } from '../services/token.service';
 @Injectable({
     providedIn: 'root'
 })
-class GarageGuardService {
+class TokenExpiredGuardService {
     constructor(
         private tokenService: TokenService,
         private router: Router
@@ -17,15 +17,19 @@ class GarageGuardService {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.tokenService.getUserType() == 'garage')
-            return true;
+        if (this.tokenService.isExpired()) {
+
+            this.tokenService.removeToken();
+            return this.router.navigateByUrl("");
+        }
         else
-            return this.router.navigateByUrl('not-found');
+            return true;
     }
 }
 
-export const GarageGuard: CanActivateFn = (
+export const TokenExpiredGuard: CanActivateFn = (
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-    return inject(GarageGuardService).canActivate(next, state);
+    return inject(TokenExpiredGuardService).canActivate(next, state);
 }
+

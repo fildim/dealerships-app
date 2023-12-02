@@ -7,7 +7,7 @@ import { TokenService } from '../services/token.service';
 @Injectable({
     providedIn: 'root'
 })
-class GarageGuardService {
+class IsLoggedInGuardService {
     constructor(
         private tokenService: TokenService,
         private router: Router
@@ -17,15 +17,15 @@ class GarageGuardService {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.tokenService.getUserType() == 'garage')
+        if (this.tokenService.isLoggedIn() && !this.tokenService.isExpired())
             return true;
         else
             return this.router.navigateByUrl('not-found');
     }
 }
 
-export const GarageGuard: CanActivateFn = (
+export const IsLoggedInGuard: CanActivateFn = (
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-    return inject(GarageGuardService).canActivate(next, state);
+    return inject(IsLoggedInGuardService).canActivate(next, state);
 }

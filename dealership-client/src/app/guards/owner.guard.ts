@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { TokenService } from '../services/token.service';
 
-@Injectable()
-export class OwnerGuard implements CanActivate {
+@Injectable({
+  providedIn: 'root'
+})
+class OwnerGuardService {
   constructor(
     private tokenService: TokenService,
     private router: Router
@@ -19,4 +21,10 @@ export class OwnerGuard implements CanActivate {
     else
       return this.router.navigateByUrl('not-found');
   }
+}
+
+export const OwnerGuard: CanActivateFn = (
+  next: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+  return inject(OwnerGuardService).canActivate(next, state);
 }

@@ -44,11 +44,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './services/notification.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LayoutComponent } from './components/layout/layout.component';
-import { CanActivateGuard } from './guards/canActivate.guard';
-import { OwnerGuard } from './guards/owner.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AppointmentDetailsComponent } from './components/appointment-details/appointment-details.component';
-import { GarageGuard } from './guards/garage.guard';
 import { GeneralInterceptor } from './interceptors/general.interceptor';
 
 
@@ -112,8 +109,6 @@ import { GeneralInterceptor } from './interceptors/general.interceptor';
     AppointmentService,
     TokenService,
     NotificationService,
-    CanActivateGuard,
-    OwnerGuard,
     { provide: HTTP_INTERCEPTORS, useClass: GeneralInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

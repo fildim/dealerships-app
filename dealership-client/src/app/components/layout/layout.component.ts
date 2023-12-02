@@ -12,7 +12,11 @@ import { Router } from '@angular/router';
 export class LayoutComponent {
 
 
-  constructor(private breakpointObserver: BreakpointObserver, private tokenService: TokenService, private router: Router) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private tokenService: TokenService,
+    private router: Router
+  ) { }
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
