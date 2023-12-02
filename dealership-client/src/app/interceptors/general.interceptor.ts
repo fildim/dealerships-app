@@ -21,7 +21,7 @@ export class GeneralInterceptor implements HttpInterceptor {
                     this.tokenService.removeToken();
                     this.router.navigateByUrl('');
                 }
-                return throwError(error);
+                return throwError(() => new Error(error));
             })
         );
     }
