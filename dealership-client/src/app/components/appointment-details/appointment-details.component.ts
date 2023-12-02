@@ -1,7 +1,7 @@
 import { NotificationService } from 'src/app/services/notification.service';
 
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.css']
 })
-export class AppointmentDetailsComponent {
+export class AppointmentDetailsComponent implements OnInit {
 
-
+  appointmentId!: number;
   appointmentDetails!: ReadAppointmentModel;
 
 
@@ -25,18 +25,22 @@ export class AppointmentDetailsComponent {
     private notificationService: NotificationService
   ) {
 
-    var appointmentId: number = parseInt(router.getCurrentNavigation()!.extras.state!['id']);
+    this.appointmentId = parseInt(router.getCurrentNavigation()!.extras.state!['id']);
 
-    this.service.getById(appointmentId)
+
+  }
+
+  ngOnInit() {
+    this.service.getById(this.appointmentId)
       .subscribe({
         next: x => {
           this.appointmentDetails = x;
           this.appointmentDetails.created = new Date(x.created.getDate() + x.created.getMonth() + x.created.getFullYear());
           this.notificationService.show("Appointment Details Fetching Successful")
         },
-        error: x => {
-          this.notificationService.show(x.error)
-        }
+        // error: x => {
+        //   this.notificationService.show(x.error)
+        // }
       });
   }
 

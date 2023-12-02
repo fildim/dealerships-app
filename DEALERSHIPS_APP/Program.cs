@@ -75,8 +75,10 @@ builder.Services.AddAuthentication(opt => {
 })
     .AddJwtBearer(options =>
     {
+        
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            ClockSkew = TimeSpan.Zero,
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,

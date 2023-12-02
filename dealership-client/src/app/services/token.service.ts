@@ -10,17 +10,23 @@ export class TokenService {
 
   constructor(private jwtHelper: JwtHelperService) { }
 
+
+  public isExpired() {
+    return this.jwtHelper.isTokenExpired();
+  }
+
+
   public isLoggenInObservable(): Observable<boolean> {
     return this.subject.asObservable();
   }
 
   setToken(token: string) {
     this.subject.next(true);
-    localStorage.setItem("jwt", token);
+    sessionStorage.setItem("jwt", token);
   }
 
   isLoggedIn() {
-    return localStorage.getItem("jwt") != null;
+    return sessionStorage.getItem("jwt") != null;
   }
 
   getId() {
@@ -50,10 +56,10 @@ export class TokenService {
 
   removeToken() {
     this.subject.next(false);
-    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
   }
 }
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  return sessionStorage.getItem("jwt");
 }

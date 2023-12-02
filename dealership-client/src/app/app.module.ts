@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { OwnerService } from './services/owner.service';
@@ -48,6 +48,8 @@ import { CanActivateGuard } from './guards/canActivate.guard';
 import { OwnerGuard } from './guards/owner.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AppointmentDetailsComponent } from './components/appointment-details/appointment-details.component';
+import { GarageGuard } from './guards/garage.guard';
+import { GeneralInterceptor } from './interceptors/general.interceptor';
 
 
 
@@ -111,7 +113,8 @@ import { AppointmentDetailsComponent } from './components/appointment-details/ap
     TokenService,
     NotificationService,
     CanActivateGuard,
-    OwnerGuard
+    OwnerGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: GeneralInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
