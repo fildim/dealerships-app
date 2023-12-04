@@ -1,5 +1,5 @@
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReadVehicleModel } from 'src/app/models/vehicle/read.vehicle.model';
@@ -12,7 +12,7 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './owner.get-all-binded-vehicles.component.html',
   styleUrls: ['./owner.get-all-binded-vehicles.component.css']
 })
-export class OwnerGetAllBindedVehiclesComponent {
+export class OwnerGetAllBindedVehiclesComponent implements OnInit {
 
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -33,7 +33,9 @@ export class OwnerGetAllBindedVehiclesComponent {
     private service: OwnerService,
     private tokenService: TokenService,
     private notificationService: NotificationService
-  ) {
+  ) { }
+
+  ngOnInit() {
 
     this.service.getBindedVehicles(this.tokenService.getId())
       .subscribe({
@@ -47,6 +49,8 @@ export class OwnerGetAllBindedVehiclesComponent {
         },
         error: x => this.notificationService.show(x.error)
       });
+
   }
+
 
 }

@@ -30,7 +30,6 @@ import { OwnerRegisterComponent } from './components/owner.components/owner-regi
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppointmentService } from './services/appointment.service';
 import { TokenService, tokenGetter } from './services/token.service';
-import { OwnerAppointmentDetailsComponent } from './components/owner.components/owner-appointment-details/owner-appointment-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -63,7 +62,6 @@ import { GeneralInterceptor } from './interceptors/general.interceptor';
     OwnerLoginComponent,
     WelcomePageComponent,
     OwnerRegisterComponent,
-    OwnerAppointmentDetailsComponent,
     GarageRegisterComponent,
     LayoutComponent,
     NotFoundComponent,

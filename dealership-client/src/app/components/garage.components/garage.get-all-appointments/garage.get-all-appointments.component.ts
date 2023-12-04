@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './garage.get-all-appointments.component.html',
   styleUrls: ['./garage.get-all-appointments.component.css']
 })
-export class GarageGetAllAppointmentsComponent {
+export class GarageGetAllAppointmentsComponent implements OnInit {
 
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -34,8 +34,9 @@ export class GarageGetAllAppointmentsComponent {
     private tokenService: TokenService,
     private router: Router,
     private notificationService: NotificationService,
-  ) {
+  ) { }
 
+  ngOnInit() {
     this.service.getAppointments(this.tokenService.getId())
       .subscribe({
         next: (listOfAppointments) => {

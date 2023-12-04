@@ -43,7 +43,7 @@ export class GarageRegisterComponent {
           }).subscribe({
             next: x => {
               this.tokenService.setToken(x.toString());
-              this.router.navigateByUrl("garage-layout")
+              this.router.navigateByUrl("garage-all-appointments");
               this.notificationService.show("Login Successful")
             },
             error: x => this.notificationService.show("Login Unsuccessful")

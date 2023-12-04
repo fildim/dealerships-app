@@ -14,9 +14,9 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class GarageUpdateAppointmentComponent {
 
-
+  appointmentId!: number;
   appointmentDetails!: ReadAppointmentModel;
-  minDate: Date;
+  minDate!: Date;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -27,9 +27,13 @@ export class GarageUpdateAppointmentComponent {
     private notificationService: NotificationService
   ) {
 
-    var appointmentId: number = parseInt(router.getCurrentNavigation()!.extras.state!['id']);
+    this.appointmentId = parseInt(router.getCurrentNavigation()!.extras.state!['id']);
 
-    this.appointmentService.getById(appointmentId)
+  }
+
+  ngOnInit() {
+
+    this.appointmentService.getById(this.appointmentId)
       .subscribe({
         next: x => {
           this.appointmentDetails = x;

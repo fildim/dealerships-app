@@ -43,7 +43,7 @@ export class OwnerRegisterComponent {
           }).subscribe({
             next: x => {
               this.tokenService.setToken(x.toString());
-              this.router.navigateByUrl("owner-layout");
+              this.router.navigateByUrl("owner-all-appointments");
               this.notificationService.show("Login Successful")
             },
             error: x => this.notificationService.show("Login Unsuccessful")

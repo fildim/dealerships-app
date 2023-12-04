@@ -10,13 +10,13 @@ import { OwnerInitialBindVehicleComponent } from "./components/owner.components/
 import { GarageGetAllAppointmentsComponent } from "./components/garage.components/garage.get-all-appointments/garage.get-all-appointments.component";
 import { GarageRegisterComponent } from "./components/garage.components/garage-register/garage-register.component";
 import { GarageUpdateAppointmentComponent } from "./components/garage.components/garage.update-appointment/garage.update-appointment.component";
-import { OwnerAppointmentDetailsComponent } from "./components/owner.components/owner-appointment-details/owner-appointment-details.component";
 import { OwnerGuard } from "./guards/owner.guard";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { GarageGuard } from "./guards/garage.guard";
 import { AppointmentDetailsComponent } from "./components/appointment-details/appointment-details.component";
 import { TokenExpiredGuard } from "./guards/tokenExpired.guard";
 import { IsLoggedInGuard } from "./guards/isLoggedIn.guard";
+import { LayoutComponent } from "./components/layout/layout.component";
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -26,13 +26,13 @@ export const routes: Routes = [
   { path: "owner-all-appointments", component: OwnerGetAllAppointmentsComponent, canActivate: [IsLoggedInGuard, OwnerGuard, TokenExpiredGuard] },
   { path: "owner-all-binded-vehicles", component: OwnerGetAllBindedVehiclesComponent, canActivate: [IsLoggedInGuard, OwnerGuard, TokenExpiredGuard] },
   { path: "owner-bind-vehicle", component: OwnerInitialBindVehicleComponent, canActivate: [IsLoggedInGuard, OwnerGuard, TokenExpiredGuard] },
-  { path: "owner-appointment-details", component: OwnerAppointmentDetailsComponent, canActivate: [IsLoggedInGuard, OwnerGuard, TokenExpiredGuard] },
   { path: "garage-all-appointments", component: GarageGetAllAppointmentsComponent, canActivate: [IsLoggedInGuard, GarageGuard, TokenExpiredGuard] },
   { path: "garage-register", component: GarageRegisterComponent },
   { path: "garage-login", component: GarageLoginComponent },
   { path: "garage-update-appointment", component: GarageUpdateAppointmentComponent, canActivate: [IsLoggedInGuard, GarageGuard, TokenExpiredGuard] },
   { path: "not-found", component: NotFoundComponent },
   { path: "appointment-details", component: AppointmentDetailsComponent, canActivate: [IsLoggedInGuard] },
+  { path: "layout", component: LayoutComponent, canActivate: [IsLoggedInGuard] },
 
 
 

@@ -1,5 +1,5 @@
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
 import { OwnerService } from 'src/app/services/owner.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -13,7 +13,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   templateUrl: './owner.get-all-appointments.component.html',
   styleUrls: ['./owner.get-all-appointments.component.css']
 })
-export class OwnerGetAllAppointmentsComponent {
+export class OwnerGetAllAppointmentsComponent implements OnInit {
 
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -35,7 +35,9 @@ export class OwnerGetAllAppointmentsComponent {
     private tokenService: TokenService,
     private router: Router,
     private notificationService: NotificationService,
-  ) {
+  ) { }
+
+  ngOnInit() {
 
     this.service.getAppointments(this.tokenService.getId())
       .subscribe({
@@ -49,8 +51,8 @@ export class OwnerGetAllAppointmentsComponent {
         },
         error: x => this.notificationService.show(x.error)
       });
-  }
 
+  }
 
 
   sendId(id: number) {

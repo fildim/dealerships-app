@@ -12,7 +12,7 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './owner.initial-bind-vehicle.component.html',
   styleUrls: ['./owner.initial-bind-vehicle.component.css']
 })
-export class OwnerInitialBindVehicleComponent {
+export class OwnerInitialBindVehicleComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   unbindedVehicles: ReadVehicleModel[] = [];
@@ -29,7 +29,9 @@ export class OwnerInitialBindVehicleComponent {
     private tokenService: TokenService,
     private router: Router,
     private notificationService: NotificationService
-  ) {
+  ) { }
+
+  ngOnInit() {
 
     this.service.getUnbindedVehicles()
       .subscribe({
@@ -39,11 +41,14 @@ export class OwnerInitialBindVehicleComponent {
           this.dataSource = new MatTableDataSource<ReadVehicleModel>(this.unbindedVehicles);
           this.dataSource.sort = this.sort;
 
-          notificationService.show("All Unbinded Vehicles Fetching Successful")
+          this.notificationService.show("All Unbinded Vehicles Fetching Successful")
         },
         error: x => this.notificationService.show(x.error)
       });
+
   }
+
+
 
   bind(id: number) {
     let ownerId = this.tokenService.getId();
