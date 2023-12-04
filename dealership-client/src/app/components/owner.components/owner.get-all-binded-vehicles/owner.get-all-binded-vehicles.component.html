@@ -30,7 +30,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateOfManufacture">
                     Date Of Manufacture
                 </th>
-                <td mat-cell *matCellDef="let vehicle">{{ vehicle.dateOfManufacture }}</td>
+                <td mat-cell *matCellDef="let vehicle">{{ vehicle.dateOfManufacture | date:'dd/MM/YYYY' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="mileage">

@@ -37,7 +37,8 @@ export class GarageUpdateAppointmentComponent {
       .subscribe({
         next: x => {
           this.appointmentDetails = x;
-          this.notificationService.show("Appointment Details Fetching Successful")
+          this.notificationService.show("Appointment Details Fetching Successful");
+          this.updateAppointmentForm.controls.crashed.setValue(this.appointmentDetails.vehicle.crashed);
         },
         error: x => {
           this.notificationService.show(x.error)
@@ -47,13 +48,16 @@ export class GarageUpdateAppointmentComponent {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
 
+
+
   }
 
   updateAppointmentForm = new FormGroup({
 
     mileage: new FormControl(0, [Validators.required]),
     diagnosis: new FormControl("", [Validators.required]),
-    dateOfPickup: new FormControl("", [Validators.required])
+    dateOfPickup: new FormControl("", [Validators.required]),
+    crashed: new FormControl(false, [Validators.required]),
   });
 
   onSubmit() {

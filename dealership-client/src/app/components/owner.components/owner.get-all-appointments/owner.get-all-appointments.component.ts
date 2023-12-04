@@ -45,6 +45,14 @@ export class OwnerGetAllAppointmentsComponent implements OnInit {
           this.listOfAppointments = listOfAppointments;
 
           this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
+          this.dataSource.sortingDataAccessor = (obj, property) => {
+            switch (property) {
+              case "vehicle": return obj.vehicle.model;
+              case "garage": return obj.garage.name;
+              case "dateOfArrival": return obj.dateOfArrival.toString();
+              default: return obj.vehicle.model;
+            }
+          };
           this.dataSource.sort = this.sort;
 
           this.notificationService.show("All Appointments Fetching Successful")

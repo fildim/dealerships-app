@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="appointmentDetails != undefined && appointmentDetails.vehicle != undefined">
 
     <mat-card-header>
         <mat-card-title>Appointment Details</mat-card-title>
@@ -15,7 +15,7 @@
             <mat-card-content>
                 <p>Vin : {{ appointmentDetails.vehicle.vin }}</p>
                 <p>Model : {{ appointmentDetails.vehicle.model }}</p>
-                <p>Date of Manufacture : {{ appointmentDetails.vehicle.dateOfManufacture }}</p>
+                <p>Date of Manufacture : {{ appointmentDetails.vehicle.dateOfManufacture | date:'dd/MM/YYYY' }}</p>
             </mat-card-content>
 
         </mat-card>
@@ -56,7 +56,7 @@
 
             <mat-list-item>
                 <span matListItemTitle>Date of Arrival</span>
-                <span matListItemLine>{{ appointmentDetails.dateOfArrival }}</span>
+                <span matListItemLine>{{ appointmentDetails.dateOfArrival | date:'dd/MM/YYYY' }}</span>
             </mat-list-item>
 
             <mat-list-item>
@@ -70,13 +70,20 @@
             </mat-list-item>
 
             <mat-list-item>
+                <span matListItemTitle>Crashed</span>
+                <span matListItemLine>
+                    <mat-checkbox [checked]="appointmentDetails.vehicle.crashed" [disabled]="true"></mat-checkbox>
+                </span>
+            </mat-list-item>
+
+            <mat-list-item>
                 <span matListItemTitle>Date of Pickup</span>
-                <span matListItemLine>{{ appointmentDetails.dateOfPickup }}</span>
+                <span matListItemLine>{{ appointmentDetails.dateOfPickup | date:'dd/MM/YYYY' }}</span>
             </mat-list-item>
 
             <mat-list-item>
                 <span matListItemTitle>Created</span>
-                <span matListItemLine>{{ appointmentDetails.created }}</span>
+                <span matListItemLine>{{ appointmentDetails.created | date:'dd/MM/YYYY' }}</span>
             </mat-list-item>
 
         </mat-list>

@@ -30,7 +30,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateOfArrival">
                     Date Of Arrival
                 </th>
-                <td mat-cell *matCellDef="let appointment">{{ appointment.dateOfArrival }}</td>
+                <td mat-cell *matCellDef="let appointment">{{ appointment.dateOfArrival | date:'dd/MM/YYYY' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="details">

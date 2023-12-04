@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
@@ -43,6 +43,14 @@ export class GarageGetAllAppointmentsComponent implements OnInit {
           this.listOfAppointments = listOfAppointments;
 
           this.dataSource = new MatTableDataSource<ReadAppointmentModel>(this.listOfAppointments);
+          this.dataSource.sortingDataAccessor = (obj, property) => {
+            switch (property) {
+              case "vehicle": return obj.vehicle.model;
+              case "owner": return obj.owner.lastname;
+              case "dateOfArrival": return obj.dateOfArrival.toString();
+              default: return obj.vehicle.model;
+            }
+          };
           this.dataSource.sort = this.sort;
 
           this.notificationService.show("All Appointments Fetching Successful")
@@ -61,6 +69,7 @@ export class GarageGetAllAppointmentsComponent implements OnInit {
 
     this.router.navigateByUrl("/garage-update-appointment", { state: { id: id } });
   }
+
 
 
 

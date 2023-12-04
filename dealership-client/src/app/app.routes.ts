@@ -33,6 +33,7 @@ export const routes: Routes = [
   { path: "not-found", component: NotFoundComponent },
   { path: "appointment-details", component: AppointmentDetailsComponent, canActivate: [IsLoggedInGuard] },
   { path: "layout", component: LayoutComponent, canActivate: [IsLoggedInGuard] },
+  { path: "**", component: NotFoundComponent },
 
 
 

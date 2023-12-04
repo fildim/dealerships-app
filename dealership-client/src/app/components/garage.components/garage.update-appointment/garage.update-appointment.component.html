@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="appointmentDetails != undefined && appointmentDetails.vehicle != undefined">
 
     <mat-card-header>
         <mat-card-title>Update Appointment Form</mat-card-title>
@@ -15,7 +15,7 @@
             <mat-card-content>
                 <p>Vin : {{ appointmentDetails.vehicle.vin }}</p>
                 <p>Model : {{ appointmentDetails.vehicle.model }}</p>
-                <p>Date of Manufacture : {{ appointmentDetails.vehicle.dateOfManufacture }}</p>
+                <p>Date of Manufacture : {{ appointmentDetails.vehicle.dateOfManufacture | date:'dd/MM/YYYY' }}</p>
             </mat-card-content>
 
         </mat-card>
@@ -26,7 +26,7 @@
 
             <mat-list-item>
                 <span matListItemTitle>Date of Arrival</span>
-                <span matListItemLine>{{ appointmentDetails.dateOfArrival }}</span>
+                <span matListItemLine>{{ appointmentDetails.dateOfArrival | date:'dd/MM/YYYY' }}</span>
             </mat-list-item>
 
             <mat-list-item>
@@ -50,9 +50,11 @@
                     </mat-form-field>
                 </p>
 
-                <!-- <p>
-                    <mat-checkbox value=false formControlName="crashed">Crashed</mat-checkbox>
-                </p> -->
+                <p>
+                    <mat-label>Crashed</mat-label>
+                    <mat-checkbox formControlName="crashed"
+                        [checked]="appointmentDetails.vehicle.crashed"></mat-checkbox>
+                </p>
 
                 <mat-form-field>
                     <mat-label>Choose a date</mat-label>
