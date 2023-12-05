@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReadAppointmentModel } from 'src/app/models/appointment/read.appointment.model';
@@ -39,6 +39,7 @@ export class GarageUpdateAppointmentComponent {
           this.appointmentDetails = x;
           this.notificationService.show("Appointment Details Fetching Successful");
           this.updateAppointmentForm.controls.crashed.setValue(this.appointmentDetails.vehicle.crashed);
+          this.updateAppointmentForm.controls.mileage.setValue(this.appointmentDetails.mileage);
         },
         error: x => {
           this.notificationService.show(x.error)
@@ -64,7 +65,7 @@ export class GarageUpdateAppointmentComponent {
 
     this.appointmentDetails.mileage = this.updateAppointmentForm.controls.mileage.value!;
     this.appointmentDetails.diagnosis = this.updateAppointmentForm.controls.diagnosis.value!
-    // if (this.updateAppointmentForm.controls.crashed == null) 
+    this.appointmentDetails.vehicle.crashed = this.updateAppointmentForm.controls.crashed.value!;
     this.appointmentDetails.dateOfPickup = new Date(this.updateAppointmentForm.controls.dateOfPickup.value!);
 
 

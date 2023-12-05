@@ -9,7 +9,7 @@ namespace DEALERSHIPS_APP.Mappings
         public GarageMapper()
         {
             CreateMap<CreateGarageDTO, Garage>();
-            CreateMap<Garage, ReadOnlyGarageDTO>();
+            CreateMap<Garage, ReadOnlyGarageDTO>().ReverseMap();
         }
     }
 }

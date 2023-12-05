@@ -40,7 +40,7 @@ export class GarageService {
     }
 
     public Update(appointment: ReadAppointmentModel) {
-        return this.httpClient.put(`${enviroment.applicationUrl}/api/garage/update`, appointment);
+        return this.httpClient.put(`${enviroment.applicationUrl}/api/garage/updateAppointment`, appointment);
     }
 
 

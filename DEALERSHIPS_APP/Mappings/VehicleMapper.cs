@@ -8,7 +8,7 @@ namespace DEALERSHIPS_APP.Mappings
     {
         public VehicleMapper()
         {
-            CreateMap<Vehicle, ReadOnlyVehicleDTO>();
+            CreateMap<Vehicle, ReadOnlyVehicleDTO>().ReverseMap();
         }
     }
 }

@@ -46,7 +46,7 @@ export class LayoutComponent {
   public get garageName(): string {
     let garageName = '';
     this.tokenService.isLoggenInObservable().subscribe(x => {
-      if (x && this.tokenService.getUserType() == 'garage')
+      if (x && this.tokenService.isLoggedIn() && this.tokenService.getUserType() == 'garage')
         garageName = this.tokenService.getGarageName();
     });
 
@@ -56,7 +56,7 @@ export class LayoutComponent {
   public get ownerFirstname(): string {
     let ownerFirstname = '';
     this.tokenService.isLoggenInObservable().subscribe(x => {
-      if (x && this.tokenService.getUserType() == 'owner')
+      if (x && this.tokenService.isLoggedIn() && this.tokenService.getUserType() == 'owner')
         ownerFirstname = this.tokenService.getFirstname();
     });
 
@@ -66,7 +66,7 @@ export class LayoutComponent {
   public get ownerLastname(): string {
     let ownerLastname = '';
     this.tokenService.isLoggenInObservable().subscribe(x => {
-      if (x && this.tokenService.getUserType() == 'owner')
+      if (x && this.tokenService.isLoggedIn() && this.tokenService.getUserType() == 'owner')
         ownerLastname = this.tokenService.getLastname();
     });
 

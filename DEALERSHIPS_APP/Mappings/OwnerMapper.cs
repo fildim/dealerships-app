@@ -9,7 +9,7 @@ namespace DEALERSHIPS_APP.Mappings
         public OwnerMapper()
         {
             CreateMap<CreateOwnerDTO, Owner>();
-            CreateMap<Owner, ReadOnlyOwnerDTO>();
+            CreateMap<Owner, ReadOnlyOwnerDTO>().ReverseMap();
         }
     }
 }
