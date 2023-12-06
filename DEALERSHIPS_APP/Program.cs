@@ -53,7 +53,7 @@ builder.Services.AddScoped<ILoginCredentialRepository, LoginCredentialRepository
 
 
 
-
+builder.Services.AddHostedService<AddVehiclesBackgroundHostedService>();
 
 
 
