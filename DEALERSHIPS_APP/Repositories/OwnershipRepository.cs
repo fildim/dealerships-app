@@ -33,7 +33,7 @@ namespace DEALERSHIPS_APP.Repositories
 
         public async Task<List<Vehicle>> GetVehiclesByOwnerId(int ownerId)
         {
-            return await _dbContext.Ownerships.Where(x => x.OwnerId == ownerId).Select(x => x.Vehicle).ToListAsync();
+            return await _dbContext.Ownerships.Include(x => x.Vehicle).Where(x => x.OwnerId == ownerId).Select(x => x.Vehicle).ToListAsync();
         }
 
 

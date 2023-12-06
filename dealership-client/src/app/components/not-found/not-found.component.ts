@@ -14,6 +14,7 @@ export class NotFoundComponent {
 
   goBack() {
 
+    if (!this.tokenService.isLoggedIn()) this.router.navigateByUrl('');
     if (this.tokenService.getUserType() == "owner") this.router.navigateByUrl('owner-all-appointments');
     if (this.tokenService.getUserType() == "garage") this.router.navigateByUrl('garage-all-appointments');
   }
