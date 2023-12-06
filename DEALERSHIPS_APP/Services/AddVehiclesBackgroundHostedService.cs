@@ -18,7 +18,7 @@ namespace DEALERSHIPS_APP.Services
         {
             _logger.LogInformation("Timed Hosted Service running");
 
-            _timer = new Timer(AddVehicles, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            _timer = new Timer(AddVehicles, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
         }
