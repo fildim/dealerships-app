@@ -48,7 +48,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.VehicleId, "IX_APPOINTMENTS_VEHICLE_ID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -89,7 +89,7 @@ public partial class DealershipDbContext : DbContext
         {
             entity.ToTable("DEALERSHIPS");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Address)
                 .HasMaxLength(50)
                 .HasColumnName("ADDRESS");
@@ -108,7 +108,7 @@ public partial class DealershipDbContext : DbContext
         {
             entity.ToTable("FACTORIES");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -123,7 +123,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.Phone, "UQ_GARAGES_PHONE").IsUnique();
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Address)
                 .HasMaxLength(50)
                 .HasColumnName("ADDRESS");
@@ -144,7 +144,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.AppointmentId, "IX_ISSUES_APPOINTMENT_ID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.AppointmentId).HasColumnName("APPOINTMENT_ID");
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
@@ -165,7 +165,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.Phone, "UQ_LOGINCREDENTIALS_PHONE").IsUnique();
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -186,7 +186,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.Phone, "UQ_OWNERS_PHONE").IsUnique();
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -209,7 +209,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.VehicleId, "IX_OWNERSHIPS_VEHICLE_ID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -244,7 +244,7 @@ public partial class DealershipDbContext : DbContext
 
             entity.HasIndex(e => e.VehicleId, "IX_OWNERSHIP_HISTORIES_VEHICLE_ID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .HasColumnName("CREATED");
@@ -290,7 +290,7 @@ public partial class DealershipDbContext : DbContext
         {
             entity.ToTable("VEHICLES");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID").UseIdentityColumn<int>();
             entity.Property(e => e.Crashed).HasColumnName("CRASHED");
             entity.Property(e => e.Created)
                 .HasColumnType("datetime")
