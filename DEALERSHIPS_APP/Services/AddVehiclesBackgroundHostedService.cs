@@ -29,43 +29,63 @@ namespace DEALERSHIPS_APP.Services
         }
 
 
-        private void AddVehicles(object? state)
+        private async void AddVehicles(object? state)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
-                using var scopedProcessingService =
+                var scopedTransactionService =
+                    scope.ServiceProvider
+                        .GetRequiredService<IDBTransactionService>();
+
+
+                try
+                {
+
+                    using var scopedProcessingService =
                     scope.ServiceProvider
                         .GetRequiredService<DealershipDbContext>();
 
-                var vehicle = new Vehicle
+                    
+                    await scopedTransactionService.Begin();
+
+                    var vehicle = new Vehicle
+                    {
+                        Created = DateTime.Now,
+                        Crashed = false,
+                        DateOfManufacture = DateTime.Now,
+                        Mileage = 0,
+                        Model = "Mazda",
+                        Vin = Guid.NewGuid().ToString().Substring(0, 20),
+                    };
+
+                    scopedProcessingService.Vehicles.Add(vehicle);
+
+                    scopedProcessingService.SaveChanges();
+
+                    var ownershipHistory = new OwnershipHistory
+                    {
+                        VehicleId = vehicle.Id,
+                        Created = DateTime.Now,
+                        DateOfManufacture = DateTime.Now,
+                        DealershipId = 1,
+                        FactoryId = 1
+                    };
+
+                    scopedProcessingService.OwnershipHistories.Add(ownershipHistory);
+
+                    scopedProcessingService.SaveChanges();
+
+                    await scopedTransactionService.Commit();
+                }
+                catch (Exception)
                 {
-                    Created = DateTime.Now,
-                    Crashed = false,
-                    DateOfManufacture = DateTime.Now,
-                    Mileage = 0,
-                    Model = "Mazda",
-                    Vin = Guid.NewGuid().ToString().Substring(0, 20),
-                };
+                    await scopedTransactionService.Rollback();
+                    throw;
+                }
 
-                scopedProcessingService.Vehicles.Add(vehicle);
-
-                scopedProcessingService.SaveChanges();
-
-                var ownershipHistory = new OwnershipHistory
-                {
-                    VehicleId = vehicle.Id,
-                    Created = DateTime.Now,
-                    DateOfManufacture = DateTime.Now,
-                    DealershipId = 1,
-                    FactoryId = 1
-                };
-
-                scopedProcessingService.OwnershipHistories.Add(ownershipHistory);
-
-                scopedProcessingService.SaveChanges();
             }
         }
-        
+
 
 
 

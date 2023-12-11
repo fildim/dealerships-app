@@ -5,58 +5,65 @@ namespace DEALERSHIPS_APP.Services
     public class DBInitializer
     {
         private readonly DealershipDbContext _dbContext;
+        private readonly IDBTransactionService _dBTransactionService;
 
-        public DBInitializer(DealershipDbContext dbContext)
+        public DBInitializer(DealershipDbContext dbContext, IDBTransactionService dBTransactionService)
         {
             this._dbContext = dbContext;
+            _dBTransactionService = dBTransactionService;
         }
 
 
 
-        public void Initialize()
+        public async Task Initialize()
         {
             if (_dbContext.Factories.Count() != 0) return;
 
-            var factories = new List<Factory>
+            await _dBTransactionService.Begin();
+
+            try
+            {
+
+                var factories = new List<Factory>
             {
                 new Factory()
                 {
-                    
+
                     Created = DateTime.Now,
                     Location = "Italy"
                 },
                 new Factory()
                 {
-                    
+
                     Created = DateTime.Now,
                     Location = "Spain"
                 },
                 new Factory()
                 {
-                    
+
                     Created = DateTime.Now,
                     Location = "Greece"
                 },
                 new Factory()
                 {
-                    
+
                     Created = DateTime.Now,
                     Location = "Germany"
                 },
                 new Factory()
                 {
-                    
+
                     Created = DateTime.Now,
                     Location = "England"
                 }
             };
-            _dbContext.Factories.AddRange(factories);
+                _dbContext.Factories.AddRange(factories);
 
-            var dealerships = new List<Dealership>
+                var dealerships = new List<Dealership>
             {
                 new Dealership
                 {
-                    
+
                     Created = DateTime.Now,
                     Name = "Mazda dealership",
                     Address = "Athens",
@@ -91,19 +98,19 @@ namespace DEALERSHIPS_APP.Services
                     Phone = "2103333111"
                 }
             };
-            _dbContext.Dealerships.AddRange(dealerships);
+                _dbContext.Dealerships.AddRange(dealerships);
 
-            var vehicles = new List<Vehicle>
+                var vehicles = new List<Vehicle>
             {
                 new Vehicle
                 {
-                    
+
                     Created = DateTime.Now,
                     Crashed = false,
                     DateOfManufacture = DateTime.Now,
                     Mileage = 0,
                     Model = "Jeep",
-                    Vin = "1a"
+                    Vin = Guid.NewGuid().ToString().Substring(0, 20)
                 },
                 new Vehicle
                 {
@@ -112,7 +119,7 @@ namespace DEALERSHIPS_APP.Services
                     DateOfManufacture = DateTime.Now,
                     Mileage = 0,
                     Model = "Mazda",
-                    Vin = "2b"
+                    Vin = Guid.NewGuid().ToString().Substring(0, 20)
                 },
                 new Vehicle
                 {
@@ -121,7 +128,7 @@ namespace DEALERSHIPS_APP.Services
                     DateOfManufacture = DateTime.Now,
                     Mileage = 0,
                     Model = "Fiat",
-                    Vin = "3c"
+                    Vin = Guid.NewGuid().ToString().Substring(0, 20)
                 },
                 new Vehicle
                 {
@@ -130,7 +137,7 @@ namespace DEALERSHIPS_APP.Services
                     DateOfManufacture = DateTime.Now,
                     Mileage = 0,
                     Model = "Ford",
-                    Vin = "4d"
+                    Vin = Guid.NewGuid().ToString().Substring(0, 20)
                 },
                 new Vehicle
                 {
@@ -139,18 +146,18 @@ namespace DEALERSHIPS_APP.Services
                     DateOfManufacture = DateTime.Now,
                     Mileage = 0,
                     Model = "BMW",
-                    Vin = "5e"
+                    Vin = Guid.NewGuid().ToString().Substring(0, 20)
                 }
             };
-            _dbContext.Vehicles.AddRange(vehicles);
+                _dbContext.Vehicles.AddRange(vehicles);
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
-            var ownership_histories = new List<OwnershipHistory>
+                var ownership_histories = new List<OwnershipHistory>
             {
                 new OwnershipHistory
                 {
-                    
+
                     VehicleId = 1,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
@@ -190,10 +197,19 @@ namespace DEALERSHIPS_APP.Services
                     FactoryId = 5
                 }
             };
-            _dbContext.OwnershipHistories.AddRange(ownership_histories);
+                _dbContext.OwnershipHistories.AddRange(ownership_histories);
 
-            _dbContext.SaveChanges();
-            
+                _dbContext.SaveChanges();
+
+                await _dBTransactionService.Commit();
+
+            }
+            catch (Exception)
+            {
+                await _dBTransactionService.Rollback();
+                throw;
+            }
+
         }
     }
 }
