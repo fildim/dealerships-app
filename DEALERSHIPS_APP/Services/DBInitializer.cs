@@ -17,6 +17,8 @@ namespace DEALERSHIPS_APP.Services
 
         public async Task Initialize()
         {
+            //_dbContext.Database.EnsureCreated();
+
             if (_dbContext.Factories.Count() != 0) return;
 
             await _dBTransactionService.Begin();

@@ -98,12 +98,12 @@ var app = builder.Build();
 
 
 
-app.Lifetime.ApplicationStarted.Register(() =>
+app.Lifetime.ApplicationStarted.Register(async () =>
 {
     using var scope = app.Services.CreateScope();
     var dbInitializer = scope.ServiceProvider.GetRequiredService<DBInitializer>();
     
-    dbInitializer.Initialize();
+    await dbInitializer.Initialize();
 });
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();

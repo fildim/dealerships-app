@@ -1,4 +1,5 @@
 ﻿using DEALERSHIPS_APP.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEALERSHIPS_APP.Services
 {
@@ -17,6 +18,15 @@ namespace DEALERSHIPS_APP.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Hosted Service running");
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                using var scopedProcessingService =
+                    scope.ServiceProvider
+                        .GetRequiredService<DealershipDbContext>();
+
+                scopedProcessingService.Database.EnsureCreated();
+            }            
 
             _timer = new Timer(AddVehicles, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
 
