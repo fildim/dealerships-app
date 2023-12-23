@@ -253,7 +253,7 @@ public partial class DealershipDbContext : DbContext
             entity.HasOne(d => d.Vehicle).WithOne(p => p.Ownership)
                 .HasForeignKey<Vehicle>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OWNERSHIPS_VEHICLES")
+                .HasConstraintName("FK_OWNERSHIPS_VEHICLES").IsRequired(false)
                 ;
         });
 

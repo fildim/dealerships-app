@@ -13,7 +13,7 @@ public partial class Ownership
 
     public DateTime? Updated { get; set; }
 
-    public virtual Owner? Owner { get; set; }
+    public virtual Owner Owner { get; set; } = null!;
 
     public virtual Vehicle Vehicle { get; set; } = null!;
 }
