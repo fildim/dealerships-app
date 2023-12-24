@@ -250,11 +250,11 @@ public partial class DealershipDbContext : DbContext
                 .HasConstraintName("FK_OWNERSHIPS_OWNERS")
                 ;
 
-            entity.HasOne(d => d.Vehicle).WithOne(p => p.Ownership)
-                .HasForeignKey<Vehicle>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OWNERSHIPS_VEHICLES").IsRequired(false)
-                ;
+            //entity.HasOne(d => d.Vehicle).WithOne(p => p.Ownership)
+            //    .HasForeignKey(x => x.);
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                //.HasConstraintName("FK_OWNERSHIPS_VEHICLES")
+                //;
         });
 
         modelBuilder.Entity<OwnershipHistory>(entity =>
@@ -345,6 +345,12 @@ public partial class DealershipDbContext : DbContext
             entity.Property(e => e.Vin)
                 .HasMaxLength(20)
                 .HasColumnName("VIN");
+
+            entity.HasOne(x => x.Ownership).WithOne(x => x.Vehicle)
+            .HasForeignKey<Ownership>(x => x.VehicleId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_VEHICLES_OWNERSHIPS")
+            .IsRequired(false);
         });
 
         OnModelCreatingPartial(modelBuilder);
