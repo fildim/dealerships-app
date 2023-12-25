@@ -1,4 +1,5 @@
 ﻿using DEALERSHIPS_APP.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEALERSHIPS_APP.Services
 {
@@ -16,9 +17,19 @@ namespace DEALERSHIPS_APP.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+
             _logger.LogInformation("Timed Hosted Service running");
 
-            _timer = new Timer(AddVehicles, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                using var scopedProcessingService =
+                    scope.ServiceProvider
+                        .GetRequiredService<DealershipDbContext>();
+
+                scopedProcessingService.Database.EnsureCreated();
+            }            
+
+            _timer = new Timer(AddVehicles, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
         }
@@ -62,13 +73,19 @@ namespace DEALERSHIPS_APP.Services
 
                     scopedProcessingService.SaveChanges();
 
+                    var dealershipIds = scopedProcessingService.Dealerships.Select(x => x.Id).ToList();
+                    var factoryIds = scopedProcessingService.Factories.Select(x => x.Id).ToList();
+
+                    var rand = new Random();
+                    var rand2 = new Random();
+
                     var ownershipHistory = new OwnershipHistory
                     {
                         VehicleId = vehicle.Id,
                         Created = DateTime.Now,
                         DateOfManufacture = DateTime.Now,
-                        DealershipId = 1,
-                        FactoryId = 1
+                        DealershipId = rand.Next(dealershipIds.Min(), dealershipIds.Max()),
+                        FactoryId = rand2.Next(factoryIds.Min(), factoryIds.Max())
                     };
 
                     scopedProcessingService.OwnershipHistories.Add(ownershipHistory);

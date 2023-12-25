@@ -17,6 +17,8 @@ namespace DEALERSHIPS_APP.Services
 
         public async Task Initialize()
         {
+            //_dbContext.Database.EnsureCreated();
+
             if (_dbContext.Factories.Count() != 0) return;
 
             await _dBTransactionService.Begin();
@@ -158,43 +160,43 @@ namespace DEALERSHIPS_APP.Services
                 new OwnershipHistory
                 {
 
-                    VehicleId = 1,
+                    VehicleId = vehicles[0].Id,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
-                    DealershipId = 1,
-                    FactoryId = 1
+                    DealershipId = dealerships[0].Id,
+                    FactoryId = factories[0].Id
                 },
                 new OwnershipHistory
                 {
-                    VehicleId = 2,
+                    VehicleId = vehicles[1].Id,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
-                    DealershipId = 2,
-                    FactoryId = 2
+                    DealershipId = dealerships[1].Id,
+                    FactoryId = factories[1].Id
                 },
                 new OwnershipHistory
                 {
-                    VehicleId = 3,
+                    VehicleId = vehicles[2].Id,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
-                    DealershipId = 3,
-                    FactoryId = 3
+                    DealershipId = dealerships[2].Id,
+                    FactoryId = factories[2].Id
                 },
                 new OwnershipHistory
                 {
-                    VehicleId = 4,
+                    VehicleId = vehicles[3].Id,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
-                    DealershipId = 4,
-                    FactoryId = 4
+                    DealershipId = dealerships[3].Id,
+                    FactoryId = factories[3].Id
                 },
                 new OwnershipHistory
                 {
-                    VehicleId = 5,
+                    VehicleId = vehicles[4].Id,
                     Created = DateTime.Now,
                     DateOfManufacture = DateTime.Now,
-                    DealershipId = 5,
-                    FactoryId = 5
+                    DealershipId = dealerships[4].Id,
+                    FactoryId = factories[4].Id
                 }
             };
                 _dbContext.OwnershipHistories.AddRange(ownership_histories);

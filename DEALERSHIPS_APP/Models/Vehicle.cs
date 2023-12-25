@@ -23,5 +23,5 @@ public partial class Vehicle
 
     public virtual ICollection<OwnershipHistory> OwnershipHistories { get; set; } = new List<OwnershipHistory>();
 
-    public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
+    public virtual Ownership? Ownership { get; set; }
 }
