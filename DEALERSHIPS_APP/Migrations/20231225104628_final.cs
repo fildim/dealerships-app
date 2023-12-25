@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DEALERSHIPS_APP.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,6 +55,22 @@ namespace DEALERSHIPS_APP.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GARAGES", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LOGINCREDENTIALS",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PHONE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PASSWORD = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CREATED = table.Column<DateTime>(type: "datetime", nullable: false),
+                    USER_TYPE = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LOGINCREDENTIALS", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,8 +158,7 @@ namespace DEALERSHIPS_APP.Migrations
                     DATE_OF_MANUFACTURE = table.Column<DateTime>(type: "datetime", nullable: false),
                     DATE_OF_SALE = table.Column<DateTime>(type: "datetime", nullable: true),
                     DATE_OF_TRANSFER = table.Column<DateTime>(type: "datetime", nullable: true),
-                    CREATED = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UPDATED = table.Column<DateTime>(type: "datetime", nullable: true)
+                    CREATED = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,7 +197,7 @@ namespace DEALERSHIPS_APP.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VEHICLE_ID = table.Column<int>(type: "int", nullable: false),
-                    OWNER_ID = table.Column<int>(type: "int", nullable: false),
+                    OWNER_ID = table.Column<int>(type: "int", nullable: true),
                     CREATED = table.Column<DateTime>(type: "datetime", nullable: false),
                     UPDATED = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
@@ -195,7 +210,7 @@ namespace DEALERSHIPS_APP.Migrations
                         principalTable: "OWNERS",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_OWNERSHIPS_VEHICLES",
+                        name: "FK_VEHICLES_OWNERSHIPS",
                         column: x => x.VEHICLE_ID,
                         principalTable: "VEHICLES",
                         principalColumn: "ID");
@@ -222,11 +237,6 @@ namespace DEALERSHIPS_APP.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_APPOINTMENTS_GARAGE_ID",
-                table: "APPOINTMENTS",
-                column: "GARAGE_ID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_APPOINTMENTS_OWNER_ID",
                 table: "APPOINTMENTS",
                 column: "OWNER_ID");
@@ -237,9 +247,33 @@ namespace DEALERSHIPS_APP.Migrations
                 column: "VEHICLE_ID");
 
             migrationBuilder.CreateIndex(
+                name: "UQ_APPOINTMENTS_GARAGEID_OWNERID_VEHICLEID_DATEOFARRIVAL",
+                table: "APPOINTMENTS",
+                columns: new[] { "GARAGE_ID", "OWNER_ID", "VEHICLE_ID", "DATE_OF_ARRIVAL" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "UQ_GARAGES_PHONE",
+                table: "GARAGES",
+                column: "PHONE",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ISSUES_APPOINTMENT_ID",
                 table: "ISSUES",
                 column: "APPOINTMENT_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ_LOGINCREDENTIALS_PHONE",
+                table: "LOGINCREDENTIALS",
+                column: "PHONE",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "UQ_OWNERS_PHONE",
+                table: "OWNERS",
+                column: "PHONE",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OWNERSHIP_HISTORIES_CURRENT_OWNER_ID",
@@ -267,14 +301,17 @@ namespace DEALERSHIPS_APP.Migrations
                 column: "VEHICLE_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OWNERSHIPS_OWNER_ID",
+                name: "IX_OWNERSHIPS_OWNERID_VEHICLEID",
                 table: "OWNERSHIPS",
-                column: "OWNER_ID");
+                columns: new[] { "OWNER_ID", "VEHICLE_ID" },
+                unique: true,
+                filter: "[OWNER_ID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OWNERSHIPS_VEHICLE_ID",
                 table: "OWNERSHIPS",
-                column: "VEHICLE_ID");
+                column: "VEHICLE_ID",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -282,6 +319,9 @@ namespace DEALERSHIPS_APP.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ISSUES");
+
+            migrationBuilder.DropTable(
+                name: "LOGINCREDENTIALS");
 
             migrationBuilder.DropTable(
                 name: "OWNERSHIP_HISTORIES");

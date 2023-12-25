@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEALERSHIPS_APP.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    [Migration("20231223170617_final2")]
-    partial class final2
+    [Migration("20231225104628_final")]
+    partial class final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -304,7 +304,7 @@ namespace DEALERSHIPS_APP.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("CREATED");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int")
                         .HasColumnName("OWNER_ID");
 
@@ -318,9 +318,13 @@ namespace DEALERSHIPS_APP.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VehicleId")
+                        .IsUnique();
+
                     b.HasIndex("OwnerId", "VehicleId")
                         .IsUnique()
-                        .HasDatabaseName("IX_OWNERSHIPS_OWNERID_VEHICLEID");
+                        .HasDatabaseName("IX_OWNERSHIPS_OWNERID_VEHICLEID")
+                        .HasFilter("[OWNER_ID] IS NOT NULL");
 
                     b.ToTable("OWNERSHIPS", (string)null);
                 });
@@ -474,10 +478,16 @@ namespace DEALERSHIPS_APP.Migrations
                     b.HasOne("DEALERSHIPS_APP.Models.Owner", "Owner")
                         .WithMany("Ownerships")
                         .HasForeignKey("OwnerId")
-                        .IsRequired()
                         .HasConstraintName("FK_OWNERSHIPS_OWNERS");
 
+                    b.HasOne("DEALERSHIPS_APP.Models.Vehicle", "Vehicle")
+                        .WithOne("Ownership")
+                        .HasForeignKey("DEALERSHIPS_APP.Models.Ownership", "VehicleId")
+                        .HasConstraintName("FK_VEHICLES_OWNERSHIPS");
+
                     b.Navigation("Owner");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("DEALERSHIPS_APP.Models.OwnershipHistory", b =>
@@ -520,16 +530,6 @@ namespace DEALERSHIPS_APP.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("DEALERSHIPS_APP.Models.Vehicle", b =>
-                {
-                    b.HasOne("DEALERSHIPS_APP.Models.Ownership", "Ownership")
-                        .WithOne("Vehicle")
-                        .HasForeignKey("DEALERSHIPS_APP.Models.Vehicle", "Id")
-                        .HasConstraintName("FK_OWNERSHIPS_VEHICLES");
-
-                    b.Navigation("Ownership");
-                });
-
             modelBuilder.Entity("DEALERSHIPS_APP.Models.Appointment", b =>
                 {
                     b.Navigation("Issues");
@@ -561,15 +561,11 @@ namespace DEALERSHIPS_APP.Migrations
                     b.Navigation("Ownerships");
                 });
 
-            modelBuilder.Entity("DEALERSHIPS_APP.Models.Ownership", b =>
-                {
-                    b.Navigation("Vehicle")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DEALERSHIPS_APP.Models.Vehicle", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Ownership");
 
                     b.Navigation("OwnershipHistories");
                 });
