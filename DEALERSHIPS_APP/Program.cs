@@ -94,10 +94,6 @@ builder.Services.AddAuthentication(opt => {
 
 var app = builder.Build();
 
-
-
-
-
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
     using var scope = app.Services.CreateScope();
@@ -115,11 +111,6 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
-
-
-
-
-
 app.UseRouting();
 
 app.UseCors("policy");
@@ -131,9 +122,6 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
-
-
-
 
 if (app.Environment.IsDevelopment())
 {
